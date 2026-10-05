@@ -1,0 +1,191 @@
+export type Produk = {
+  id: number;
+  nama: string;
+  slug: string;
+  kategori: 'duka-cita' | 'wedding' | 'grand-opening' | 'buket';
+  harga: number;
+  emoji: string;
+  badge?: string;
+  badgeColor?: string;
+  deskripsi: string;
+  tersedia: boolean;
+};
+
+export const KATEGORI_LABEL: Record<Produk['kategori'] | 'semua', string> = {
+  semua: 'Semua',
+  'duka-cita': 'Duka Cita',
+  wedding: 'Wedding',
+  'grand-opening': 'Grand Opening',
+  buket: 'Buket & Lainnya',
+};
+
+export const dummyKatalog: Produk[] = [
+  // Duka Cita
+  {
+    id: 1,
+    nama: 'Papan Bunga Duka Cita Premium',
+    slug: 'papan-bunga-duka-cita-premium',
+    kategori: 'duka-cita',
+    harga: 750000,
+    emoji: '🌿',
+    badge: 'Terlaris',
+    badgeColor: 'bg-[#2d6a4f] text-white',
+    deskripsi: 'Rangkaian papan bunga duka cita elegan dengan bunga segar pilihan, cocok untuk berbagai acara belasungkawa.',
+    tersedia: true,
+  },
+  {
+    id: 2,
+    nama: 'Papan Bunga Duka Cita Simpel',
+    slug: 'papan-bunga-duka-cita-simpel',
+    kategori: 'duka-cita',
+    harga: 500000,
+    emoji: '🌾',
+    deskripsi: 'Pilihan ekonomis namun tetap elegan dan bermartabat untuk momen belasungkawa.',
+    tersedia: true,
+  },
+  {
+    id: 3,
+    nama: 'Papan Bunga Duka Cita Eksklusif',
+    slug: 'papan-bunga-duka-cita-eksklusif',
+    kategori: 'duka-cita',
+    harga: 1200000,
+    emoji: '🌺',
+    badge: 'Eksklusif',
+    badgeColor: 'bg-gray-800 text-white',
+    deskripsi: 'Papan bunga duka cita mewah dengan rangkaian bunga premium dan desain eksklusif.',
+    tersedia: true,
+  },
+  // Wedding
+  {
+    id: 4,
+    nama: 'Rangkaian Bunga Wedding Elegan',
+    slug: 'rangkaian-bunga-wedding-elegan',
+    kategori: 'wedding',
+    harga: 1200000,
+    emoji: '🌸',
+    badge: 'Favorit',
+    badgeColor: 'bg-pink-500 text-white',
+    deskripsi: 'Dekorasi pernikahan romantis dengan mawar putih dan pink yang memukau.',
+    tersedia: true,
+  },
+  {
+    id: 5,
+    nama: 'Buket Pengantin Premium',
+    slug: 'buket-pengantin-premium',
+    kategori: 'wedding',
+    harga: 850000,
+    emoji: '💍',
+    deskripsi: 'Buket pengantin mewah dengan bunga segar pilihan, sempurna untuk hari istimewa Anda.',
+    tersedia: true,
+  },
+  {
+    id: 6,
+    nama: 'Dekorasi Meja Wedding',
+    slug: 'dekorasi-meja-wedding',
+    kategori: 'wedding',
+    harga: 400000,
+    emoji: '🌼',
+    deskripsi: 'Rangkaian bunga cantik untuk dekorasi meja resepsi pernikahan Anda.',
+    tersedia: true,
+  },
+  {
+    id: 7,
+    nama: 'Arch Bunga Wedding',
+    slug: 'arch-bunga-wedding',
+    kategori: 'wedding',
+    harga: 2500000,
+    emoji: '🌹',
+    badge: 'Premium',
+    badgeColor: 'bg-rose-500 text-white',
+    deskripsi: 'Gerbang bunga akad yang memukau untuk dokumentasi foto pernikahan terbaik.',
+    tersedia: true,
+  },
+  // Grand Opening
+  {
+    id: 8,
+    nama: 'Standing Flower Grand Opening',
+    slug: 'standing-flower-grand-opening',
+    kategori: 'grand-opening',
+    harga: 850000,
+    emoji: '🌻',
+    badge: 'Populer',
+    badgeColor: 'bg-[#b5862b] text-white',
+    deskripsi: 'Standing flower megah untuk grand opening toko atau kantor, kesan pertama yang sempurna.',
+    tersedia: true,
+  },
+  {
+    id: 9,
+    nama: 'Papan Bunga Selamat & Sukses',
+    slug: 'papan-bunga-selamat-sukses',
+    kategori: 'grand-opening',
+    harga: 650000,
+    emoji: '🎊',
+    deskripsi: 'Papan bunga ucapan selamat yang cerah dan meriah untuk perayaan grand opening.',
+    tersedia: true,
+  },
+  {
+    id: 10,
+    nama: 'Rangkaian Bunga Promosi',
+    slug: 'rangkaian-bunga-promosi',
+    kategori: 'grand-opening',
+    harga: 450000,
+    emoji: '🏆',
+    deskripsi: 'Pilihan ekonomis untuk melengkapi dekorasi grand opening bisnis Anda.',
+    tersedia: true,
+  },
+  {
+    id: 11,
+    nama: 'Bunga Meja Kantor Grand Opening',
+    slug: 'bunga-meja-kantor-grand-opening',
+    kategori: 'grand-opening',
+    harga: 300000,
+    emoji: '🌵',
+    deskripsi: 'Rangkaian bunga meja elegan untuk mempercantik kantor atau toko yang baru dibuka.',
+    tersedia: false,
+  },
+  // Buket
+  {
+    id: 12,
+    nama: 'Buket Bunga Wisuda',
+    slug: 'buket-bunga-wisuda',
+    kategori: 'buket',
+    harga: 350000,
+    emoji: '💐',
+    badge: 'Hits',
+    badgeColor: 'bg-purple-500 text-white',
+    deskripsi: 'Buket colorful spesial wisuda, lengkap dengan pita dan kartu ucapan.',
+    tersedia: true,
+  },
+  {
+    id: 13,
+    nama: 'Buket Ulang Tahun',
+    slug: 'buket-ulang-tahun',
+    kategori: 'buket',
+    harga: 250000,
+    emoji: '🎂',
+    deskripsi: 'Buket bunga ceria dan meriah sebagai kado ulang tahun yang berkesan.',
+    tersedia: true,
+  },
+  {
+    id: 14,
+    nama: 'Hand Bouquet Premium',
+    slug: 'hand-bouquet-premium',
+    kategori: 'buket',
+    harga: 550000,
+    emoji: '🌷',
+    badge: 'Favorit',
+    badgeColor: 'bg-pink-500 text-white',
+    deskripsi: 'Hand bouquet mewah dengan bunga pilihan premium, cocok untuk hadiah spesial.',
+    tersedia: true,
+  },
+  {
+    id: 15,
+    nama: 'Buket Bunga Kering',
+    slug: 'buket-bunga-kering',
+    kategori: 'buket',
+    harga: 180000,
+    emoji: '🍂',
+    deskripsi: 'Buket bunga kering estetik yang tahan lama, hiasan rumah sekaligus hadiah unik.',
+    tersedia: true,
+  },
+];
