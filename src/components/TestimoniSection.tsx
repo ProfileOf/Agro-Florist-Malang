@@ -5,66 +5,75 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { Star, Quote, ChevronLeft, ChevronRight } from 'lucide-react';
 import Image from 'next/image';
 
-const dummyTestimoni = [
+export type TestimoniItem = {
+  id: number;
+  nama: string;
+  jabatanAtauKota: string;
+  pesan: string;
+  rating: number;
+  foto: string | null;
+};
+
+// Warna avatar fallback berdasarkan index
+const AVATAR_COLORS = [
+  'bg-pink-400',
+  'bg-blue-400',
+  'bg-[#14532D]',
+  'bg-purple-400',
+  'bg-orange-400',
+  'bg-teal-500',
+  'bg-rose-400',
+  'bg-indigo-400',
+];
+
+const dummyTestimoni: TestimoniItem[] = [
   {
     id: 1,
     nama: 'Siti Rahayu',
     jabatanAtauKota: 'Malang',
-    pesan:
-      'Karangan bunganya sangat cantik dan rapi! Pengiriman tepat waktu, bunga masih sangat segar sampai tujuan. Sangat puas dan akan order lagi.',
+    pesan: 'Karangan bunganya sangat cantik dan rapi! Pengiriman tepat waktu, bunga masih sangat segar sampai tujuan. Sangat puas dan akan order lagi.',
     rating: 5,
-    initials: 'SR',
-    color: 'bg-pink-400',
+    foto: null,
   },
   {
     id: 2,
     nama: 'PT Sekawan Media',
     jabatanAtauKota: 'Grand Opening Kantor Baru',
-    pesan:
-      'Kami memesan standing flower untuk grand opening kantor. Hasilnya mewah, sangat sesuai ekspektasi. Tim Agro Florist sangat profesional dan responsif.',
+    pesan: 'Kami memesan standing flower untuk grand opening kantor. Hasilnya mewah, sangat sesuai ekspektasi. Tim Agro Florist sangat profesional dan responsif.',
     rating: 5,
-    initials: 'SM',
-    color: 'bg-blue-400',
+    foto: null,
   },
   {
     id: 3,
     nama: 'Budi Santoso',
     jabatanAtauKota: 'Kepanjen, Malang',
-    pesan:
-      'Papan bunga duka cita yang dikirim sangat layak dan bermartabat. Keluarga kami sangat berterima kasih atas pelayanan yang cepat dan harga yang terjangkau.',
+    pesan: 'Papan bunga duka cita yang dikirim sangat layak dan bermartabat. Keluarga kami sangat berterima kasih atas pelayanan yang cepat dan harga yang terjangkau.',
     rating: 5,
-    initials: 'BS',
-    color: 'bg-[#14532D]',
+    foto: null,
   },
   {
     id: 4,
     nama: 'Dewi Lestari',
     jabatanAtauKota: 'Pengantin — Malang',
-    pesan:
-      'Buket pernikahan kami sangat indah! Warna dan pilihan bunganya persis seperti yang saya mau. Kak florist sangat sabar dan mau revisi desain sampai cocok.',
+    pesan: 'Buket pernikahan kami sangat indah! Warna dan pilihan bunganya persis seperti yang saya mau. Kak florist sangat sabar dan mau revisi desain sampai cocok.',
     rating: 5,
-    initials: 'DL',
-    color: 'bg-purple-400',
+    foto: null,
   },
   {
     id: 5,
     nama: 'Rizky Firmansyah',
     jabatanAtauKota: 'Blimbing, Malang',
-    pesan:
-      'Beli buket wisuda untuk adik. Hasilnya bagus banget, bunga segar, harga bersahabat. Packing juga aman, sampai rumah masih cantik. Recommended!',
+    pesan: 'Beli buket wisuda untuk adik. Hasilnya bagus banget, bunga segar, harga bersahabat. Packing juga aman, sampai rumah masih cantik. Recommended!',
     rating: 5,
-    initials: 'RF',
-    color: 'bg-orange-400',
+    foto: null,
   },
   {
     id: 6,
     nama: 'CV Maju Bersama',
     jabatanAtauKota: 'Launching Produk',
-    pesan:
-      'Sudah 3x order untuk event perusahaan kami. Selalu puas dengan hasilnya! Responsif di WhatsApp, pengiriman on time, dan bunga selalu segar.',
+    pesan: 'Sudah 3x order untuk event perusahaan kami. Selalu puas dengan hasilnya! Responsif di WhatsApp, pengiriman on time, dan bunga selalu segar.',
     rating: 5,
-    initials: 'MB',
-    color: 'bg-teal-500',
+    foto: null,
   },
 ];
 
@@ -84,7 +93,15 @@ function StarRating({ rating }: { rating: number }) {
   );
 }
 
-function TestimoniCard({ t }: { t: (typeof dummyTestimoni)[0] }) {
+function TestimoniCard({ t, colorClass }: { t: TestimoniItem; colorClass: string }) {
+  // Ambil inisial dari nama (maks 2 huruf)
+  const initials = t.nama
+    .split(' ')
+    .slice(0, 2)
+    .map((w) => w[0])
+    .join('')
+    .toUpperCase();
+
   return (
     <div className="bg-white rounded-2xl p-6 shadow-sm border border-gray-100/60 flex flex-col gap-4 h-full">
       {/* Quote + stars */}
@@ -105,12 +122,18 @@ function TestimoniCard({ t }: { t: (typeof dummyTestimoni)[0] }) {
 
       {/* Reviewer */}
       <div className="flex items-center gap-3 pt-3 border-t border-gray-50">
-        <div
-          className={`w-10 h-10 rounded-full ${t.color} flex items-center justify-center text-white text-sm font-bold shrink-0`}
-          aria-hidden="true"
-        >
-          {t.initials}
-        </div>
+        {t.foto ? (
+          <div className="relative w-10 h-10 rounded-full overflow-hidden shrink-0">
+            <Image src={t.foto} alt={t.nama} fill className="object-cover" />
+          </div>
+        ) : (
+          <div
+            className={`w-10 h-10 rounded-full ${colorClass} flex items-center justify-center text-white text-sm font-bold shrink-0`}
+            aria-hidden="true"
+          >
+            {initials}
+          </div>
+        )}
         <div>
           <p className="text-sm font-semibold text-gray-800">{t.nama}</p>
           {t.jabatanAtauKota && (
@@ -122,10 +145,10 @@ function TestimoniCard({ t }: { t: (typeof dummyTestimoni)[0] }) {
   );
 }
 
-export default function TestimoniSection() {
-  // Desktop: 3 cards visible → max index = total - 3
-  // Mobile:  1 card  visible → max index = total - 1
-  const total = dummyTestimoni.length;
+export default function TestimoniSection({ testimoniList }: { testimoniList: TestimoniItem[] }) {
+  // Fallback ke dummy kalau Sanity kosong
+  const data = testimoniList.length > 0 ? testimoniList : dummyTestimoni;
+  const total = data.length;
   const [index, setIndex] = useState(0);
   const [isMobile, setIsMobile] = useState(false);
   const [direction, setDirection] = useState<1 | -1>(1);
@@ -190,7 +213,7 @@ export default function TestimoniSection() {
     exit: (d: number) => ({ x: d > 0 ? -80 : 80, opacity: 0 }),
   };
 
-  const visibleCards = dummyTestimoni.slice(index, index + visibleCount);
+  const visibleCards = data.slice(index, index + visibleCount);
 
   return (
     <section id="testimoni" className="relative py-20 overflow-hidden">
@@ -249,7 +272,11 @@ export default function TestimoniSection() {
                 }`}
               >
                 {visibleCards.map((t) => (
-                  <TestimoniCard key={t.id} t={t} />
+                  <TestimoniCard
+                    key={t.id}
+                    t={t}
+                    colorClass={AVATAR_COLORS[(t.id - 1) % AVATAR_COLORS.length]}
+                  />
                 ))}
               </motion.div>
             </AnimatePresence>

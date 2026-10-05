@@ -56,11 +56,5 @@ export const katalog = defineType({
       type: 'text',
       rows: 3,
     }),
-    defineField({
-      name: 'tersedia',
-      title: 'Status Stok/Tersedia',
-      type: 'boolean',
-      initialValue: true,
-    }),
   ],
 });

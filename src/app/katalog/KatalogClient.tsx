@@ -8,7 +8,7 @@ import Link from 'next/link';
 import Image from 'next/image';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
-import { dummyKatalog, KATEGORI_LABEL, type Produk } from '@/lib/dummyKatalog';
+import { KATEGORI_LABEL, type Produk } from '@/lib/dummyKatalog';
 
 type FilterKategori = Produk['kategori'] | 'semua';
 
@@ -36,7 +36,7 @@ const KATEGORI_EMOJI: Record<FilterKategori, string> = {
   buket: '💐',
 };
 
-export default function KatalogClient() {
+export default function KatalogClient({ produkList }: { produkList: Produk[] }) {
   const searchParams = useSearchParams();
   const paramKategori = searchParams.get('kategori') as FilterKategori | null;
   const initialKategori: FilterKategori =
@@ -48,7 +48,7 @@ export default function KatalogClient() {
   const [query, setQuery] = useState('');
 
   const produkTampil = useMemo(() => {
-    return dummyKatalog.filter((p) => {
+    return produkList.filter((p) => {
       const cocokKategori =
         aktifKategori === 'semua' || p.kategori === aktifKategori;
       const cocokSearch =
@@ -57,21 +57,21 @@ export default function KatalogClient() {
         p.deskripsi.toLowerCase().includes(query.toLowerCase());
       return cocokKategori && cocokSearch;
     });
-  }, [aktifKategori, query]);
+  }, [aktifKategori, query, produkList]);
 
   const jumlahPerKategori = useMemo(() => {
     const map: Record<FilterKategori, number> = {
-      semua: dummyKatalog.length,
+      semua: produkList.length,
       'duka-cita': 0,
       wedding: 0,
       'grand-opening': 0,
       buket: 0,
     };
-    dummyKatalog.forEach((p) => {
+    produkList.forEach((p) => {
       map[p.kategori] += 1;
     });
     return map;
-  }, []);
+  }, [produkList]);
 
   return (
     <>
@@ -104,7 +104,7 @@ export default function KatalogClient() {
               <div>
                 <span className="inline-block bg-[#52b788]/20 text-[#52b788] text-xs font-semibold px-3 py-1 rounded-full mb-3">
                   <Tag className="w-3 h-3 inline mr-1" aria-hidden="true" />
-                  {dummyKatalog.length} Produk Tersedia
+                  {produkList.length} Produk Tersedia
                 </span>
                 <h1 className="text-3xl sm:text-4xl font-bold drop-shadow-md">
                   Katalog Karangan Bunga
