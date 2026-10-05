@@ -114,8 +114,8 @@ export default function ShowcaseSection() {
           <span className="inline-block bg-[#14532D]/10 text-[#14532D] text-xs font-semibold px-4 py-1.5 rounded-full mb-4 tracking-widest uppercase">
             Kategori Kami
           </span>
-          <h2 className="font-[family-name:var(--font-display)] text-3xl sm:text-4xl font-semibold text-[#14532D] mb-3">
-            Bunga untuk Setiap Momen
+          <h2 className="font-[family-name:var(--font-display)] text-2xl sm:text-4xl font-semibold text-[#14532D] mb-3">
+            Bunga untuk <br></br>Setiap Momen
           </h2>
           <p className="text-gray-500 max-w-md mx-auto text-[15px] leading-relaxed">
             Dari duka cita hingga perayaan — kami hadirkan rangkaian terbaik
