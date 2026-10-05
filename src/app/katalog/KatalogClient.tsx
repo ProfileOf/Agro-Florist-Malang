@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useMemo } from 'react';
+import { useSearchParams } from 'next/navigation';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ShoppingBag, ArrowLeft, Search, Tag } from 'lucide-react';
 import Link from 'next/link';
@@ -36,7 +37,14 @@ const KATEGORI_EMOJI: Record<FilterKategori, string> = {
 };
 
 export default function KatalogClient() {
-  const [aktifKategori, setAktifKategori] = useState<FilterKategori>('semua');
+  const searchParams = useSearchParams();
+  const paramKategori = searchParams.get('kategori') as FilterKategori | null;
+  const initialKategori: FilterKategori =
+    paramKategori && KATEGORI_TABS.includes(paramKategori as FilterKategori)
+      ? paramKategori
+      : 'semua';
+
+  const [aktifKategori, setAktifKategori] = useState<FilterKategori>(initialKategori);
   const [query, setQuery] = useState('');
 
   const produkTampil = useMemo(() => {
@@ -191,47 +199,27 @@ export default function KatalogClient() {
                     className="group bg-white border border-gray-100 rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 hover:-translate-y-1 flex flex-col"
                   >
                     {/* Image area */}
-                    <div className="relative aspect-square bg-gradient-to-br from-[#d8f3dc] to-[#b7e4c7] flex items-center justify-center">
-                      <span
-                        className="text-6xl"
-                        role="img"
-                        aria-label={produk.nama}
-                      >
-                        {produk.emoji}
-                      </span>
-
-                      {/* Badge */}
-                      {produk.badge && (
-                        <span
-                          className={`absolute top-3 left-3 text-xs font-bold px-2.5 py-1 rounded-full ${produk.badgeColor}`}
-                        >
-                          {produk.badge}
-                        </span>
-                      )}
-
-                      {/* Stok habis overlay */}
-                      {!produk.tersedia && (
-                        <div className="absolute inset-0 bg-white/70 flex items-center justify-center">
-                          <span className="bg-gray-700 text-white text-xs font-bold px-3 py-1.5 rounded-full">
-                            Stok Habis
-                          </span>
-                        </div>
-                      )}
+                    <div className="relative aspect-square overflow-hidden bg-[#d8f3dc]">
+                      <Image
+                        src={produk.gambar}
+                        alt={produk.nama}
+                        fill
+                        className="object-cover group-hover:scale-105 transition-transform duration-500"
+                        sizes="(max-width: 640px) 100vw, (max-width: 768px) 50vw, (max-width: 1024px) 33vw, 25vw"
+                      />
 
                       {/* Hover overlay — CTA */}
-                      {produk.tersedia && (
-                        <div className="absolute inset-0 bg-[#2d6a4f]/0 group-hover:bg-[#2d6a4f]/10 transition-colors flex items-center justify-center opacity-0 group-hover:opacity-100">
-                          <a
-                            href={`https://wa.me/6281234567890?text=Halo%2C%20saya%20ingin%20pesan%20${encodeURIComponent(produk.nama)}`}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="bg-white text-[#2d6a4f] font-semibold text-sm px-4 py-2 rounded-full shadow-lg hover:bg-[#2d6a4f] hover:text-white transition-all"
-                            aria-label={`Pesan ${produk.nama}`}
-                          >
-                            Pesan Sekarang
-                          </a>
-                        </div>
-                      )}
+                      <div className="absolute inset-0 bg-[#2d6a4f]/0 group-hover:bg-[#2d6a4f]/20 transition-colors flex items-center justify-center opacity-0 group-hover:opacity-100">
+                        <a
+                          href={`https://wa.me/6281234567890?text=Halo%2C%20saya%20ingin%20pesan%20${encodeURIComponent(produk.nama)}`}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="bg-white text-[#2d6a4f] font-semibold text-sm px-4 py-2 rounded-full shadow-lg hover:bg-[#2d6a4f] hover:text-white transition-all"
+                          aria-label={`Pesan ${produk.nama}`}
+                        >
+                          Pesan Sekarang
+                        </a>
+                      </div>
                     </div>
 
                     {/* Info */}
@@ -249,19 +237,15 @@ export default function KatalogClient() {
                         <span className="text-[#2d6a4f] font-bold text-base">
                           {formatRupiah(produk.harga)}
                         </span>
-                        {produk.tersedia ? (
-                          <a
-                            href={`https://wa.me/6281234567890?text=Halo%2C%20saya%20ingin%20pesan%20${encodeURIComponent(produk.nama)}`}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="w-8 h-8 rounded-full bg-[#d8f3dc] hover:bg-[#2d6a4f] text-[#2d6a4f] hover:text-white flex items-center justify-center transition-all"
-                            aria-label={`Pesan ${produk.nama}`}
-                          >
-                            <ShoppingBag className="w-4 h-4" aria-hidden="true" />
-                          </a>
-                        ) : (
-                          <span className="text-xs text-gray-400">Habis</span>
-                        )}
+                        <a
+                          href={`https://wa.me/6281234567890?text=Halo%2C%20saya%20ingin%20pesan%20${encodeURIComponent(produk.nama)}`}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="w-8 h-8 rounded-full bg-[#d8f3dc] hover:bg-[#2d6a4f] text-[#2d6a4f] hover:text-white flex items-center justify-center transition-all"
+                          aria-label={`Pesan ${produk.nama}`}
+                        >
+                          <ShoppingBag className="w-4 h-4" aria-hidden="true" />
+                        </a>
                       </div>
                     </div>
                   </motion.div>

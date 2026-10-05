@@ -36,7 +36,7 @@ const categories = [
     label: 'Buket Wisuda',
     description: 'Buket bunga segar cantik untuk merayakan kelulusan dan pencapaian.',
     image: '/images/grad.jpg',
-    filter: 'buket-wisuda',
+    filter: 'buket',
     waText: 'Halo%20Agro%20Florist%2C%20saya%20mau%20pesan%20buket%20wisuda',
   },
 ];
