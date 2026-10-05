@@ -37,7 +37,7 @@ export default async function KatalogPage() {
 
   if (isSanityConfigured) {
     try {
-      const sanityData: SanityProduk[] = await client.fetch(QUERY);
+      const sanityData: SanityProduk[] = await client!.fetch(QUERY);
       if (sanityData && sanityData.length > 0) {
         produkList = sanityData.map((item, i) => ({
           id: i + 1,

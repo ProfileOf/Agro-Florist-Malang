@@ -31,7 +31,7 @@ export default async function Home() {
 
   if (isSanityConfigured) {
     try {
-      const data: SanityTestimoni[] = await client.fetch(TESTIMONI_QUERY);
+      const data: SanityTestimoni[] = await client!.fetch(TESTIMONI_QUERY);
       if (data && data.length > 0) {
         testimoniList = data.map((item, i) => ({
           id: i + 1,

@@ -4,22 +4,23 @@ import imageUrlBuilder from '@sanity/image-url';
 const projectId = process.env.NEXT_PUBLIC_SANITY_PROJECT_ID;
 const dataset = process.env.NEXT_PUBLIC_SANITY_DATASET ?? 'production';
 
-// Guard: kalau env belum diset (misal saat build CI/CD tanpa env vars),
-// buat dummy client yang tidak akan crash saat module di-load.
-export const client = createClient({
-  projectId: projectId ?? 'placeholder',
-  dataset,
-  apiVersion: '2024-01-01',
-  useCdn: true,
-  token: process.env.SANITY_API_TOKEN,
-});
+/** True kalau env vars Sanity sudah diset dengan benar */
+export const isSanityConfigured = Boolean(projectId);
 
-const builder = imageUrlBuilder(client);
+// Hanya buat client kalau projectId tersedia
+// Saat build tanpa env vars (misal Vercel sebelum env diset), client = null
+export const client = isSanityConfigured
+  ? createClient({
+      projectId: projectId!,
+      dataset,
+      apiVersion: '2024-01-01',
+      useCdn: true,
+      token: process.env.SANITY_API_TOKEN,
+    })
+  : null;
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export function urlFor(source: any) {
-  return builder.image(source);
+  if (!client) throw new Error('Sanity client not configured');
+  return imageUrlBuilder(client).image(source);
 }
-
-/** Cek apakah Sanity sudah dikonfigurasi dengan benar */
-export const isSanityConfigured = Boolean(projectId);
