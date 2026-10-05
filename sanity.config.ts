@@ -6,8 +6,8 @@ export default defineConfig({
   name: 'agro-florist-malang',
   title: 'Agro Florist Malang — CMS',
 
-  projectId: process.env.NEXT_PUBLIC_SANITY_PROJECT_ID!,
-  dataset: process.env.NEXT_PUBLIC_SANITY_DATASET!,
+  projectId: process.env.NEXT_PUBLIC_SANITY_PROJECT_ID ?? 'teb9ra8g',
+  dataset: process.env.NEXT_PUBLIC_SANITY_DATASET ?? 'production',
 
   basePath: '/studio',
 
