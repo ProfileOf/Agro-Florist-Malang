@@ -1,9 +1,17 @@
 'use client';
 
-import { useState, useMemo } from 'react';
+import { useState, useMemo, useRef, useEffect } from 'react';
 import { useSearchParams } from 'next/navigation';
 import { motion, AnimatePresence } from 'framer-motion';
-import { ShoppingBag, ArrowLeft, Search, Tag } from 'lucide-react';
+import {
+  ShoppingBag,
+  ArrowLeft,
+  Search,
+  Tag,
+  ArrowUpDown,
+  ChevronDown,
+  Check,
+} from 'lucide-react';
 import Link from 'next/link';
 import Image from 'next/image';
 import Navbar from '@/components/Navbar';
@@ -11,6 +19,13 @@ import Footer from '@/components/Footer';
 import { KATEGORI_LABEL, type Produk } from '@/lib/dummyKatalog';
 
 type FilterKategori = Produk['kategori'] | 'semua';
+type SortOption = 'default' | 'terendah' | 'tertinggi';
+
+const SORT_OPTIONS: { value: SortOption; label: string; shortLabel: string }[] = [
+  { value: 'default', label: 'Default / Rekomendasi', shortLabel: 'Default' },
+  { value: 'terendah', label: 'Harga: Terendah ke Tertinggi', shortLabel: 'Harga Terendah' },
+  { value: 'tertinggi', label: 'Harga: Tertinggi ke Terendah', shortLabel: 'Harga Tertinggi' },
+];
 
 function formatRupiah(angka: number) {
   return new Intl.NumberFormat('id-ID', {
@@ -46,9 +61,39 @@ export default function KatalogClient({ produkList }: { produkList: Produk[] }) 
 
   const [aktifKategori, setAktifKategori] = useState<FilterKategori>(initialKategori);
   const [query, setQuery] = useState('');
+  const [sortOption, setSortOption] = useState<SortOption>('default');
+
+  const [openKategoriMobile, setOpenKategoriMobile] = useState(false);
+  const [openSortDesktop, setOpenSortDesktop] = useState(false);
+  const [openSortMobile, setOpenSortMobile] = useState(false);
+
+  const kategoriMobileRef = useRef<HTMLDivElement>(null);
+  const sortDesktopRef = useRef<HTMLDivElement>(null);
+  const sortMobileRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    function handleClickOutside(event: MouseEvent) {
+      const target = event.target as Node;
+      if (kategoriMobileRef.current && !kategoriMobileRef.current.contains(target)) {
+        setOpenKategoriMobile(false);
+      }
+      if (sortDesktopRef.current && !sortDesktopRef.current.contains(target)) {
+        setOpenSortDesktop(false);
+      }
+      if (sortMobileRef.current && !sortMobileRef.current.contains(target)) {
+        setOpenSortMobile(false);
+      }
+    }
+
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => document.removeEventListener('mousedown', handleClickOutside);
+  }, []);
+
+  const currentSort =
+    SORT_OPTIONS.find((s) => s.value === sortOption) ?? SORT_OPTIONS[0];
 
   const produkTampil = useMemo(() => {
-    return produkList.filter((p) => {
+    const filtered = produkList.filter((p) => {
       const cocokKategori =
         aktifKategori === 'semua' || p.kategori === aktifKategori;
       const cocokSearch =
@@ -57,7 +102,16 @@ export default function KatalogClient({ produkList }: { produkList: Produk[] }) 
         p.deskripsi.toLowerCase().includes(query.toLowerCase());
       return cocokKategori && cocokSearch;
     });
-  }, [aktifKategori, query, produkList]);
+
+    if (sortOption === 'terendah') {
+      return [...filtered].sort((a, b) => a.harga - b.harga);
+    }
+    if (sortOption === 'tertinggi') {
+      return [...filtered].sort((a, b) => b.harga - a.harga);
+    }
+
+    return filtered;
+  }, [aktifKategori, query, sortOption, produkList]);
 
   const jumlahPerKategori = useMemo(() => {
     const map: Record<FilterKategori, number> = {
@@ -135,37 +189,253 @@ export default function KatalogClient({ produkList }: { produkList: Produk[] }) 
         </div>
 
         <div className="max-w-6xl mx-auto px-4 sm:px-6 py-10">
-          {/* Filter tabs */}
-          <div className="flex flex-wrap gap-2 mb-8" role="tablist" aria-label="Filter kategori">
-            {KATEGORI_TABS.map((kat) => (
-              <button
-                key={kat}
-                role="tab"
-                aria-selected={aktifKategori === kat}
-                onClick={() => setAktifKategori(kat)}
-                className={`inline-flex items-center gap-1.5 px-4 py-2 rounded-full text-sm font-medium transition-all cursor-pointer ${
-                  aktifKategori === kat
-                    ? 'bg-[#2d6a4f] text-white shadow-md scale-105'
-                    : 'bg-white text-gray-600 border border-gray-200 hover:border-[#52b788] hover:text-[#2d6a4f]'
-                }`}
-              >
-                <span aria-hidden="true">{KATEGORI_EMOJI[kat]}</span>
-                {KATEGORI_LABEL[kat]}
-                <span
-                  className={`text-xs px-1.5 py-0.5 rounded-full ${
+          {/* Desktop Filter Bar: Category Pills + Custom Sorting Dropdown */}
+          <div className="hidden md:flex flex-wrap items-center justify-between gap-4 mb-6">
+            {/* Category tabs */}
+            <div className="flex flex-wrap items-center gap-2" role="tablist" aria-label="Filter kategori">
+              {KATEGORI_TABS.map((kat) => (
+                <button
+                  key={kat}
+                  role="tab"
+                  aria-selected={aktifKategori === kat}
+                  onClick={() => setAktifKategori(kat)}
+                  className={`inline-flex items-center gap-1.5 px-4 py-2 rounded-full text-sm font-medium transition-all cursor-pointer ${
                     aktifKategori === kat
-                      ? 'bg-white/20 text-white'
-                      : 'bg-gray-100 text-gray-500'
+                      ? 'bg-[#2d6a4f] text-white shadow-md scale-105'
+                      : 'bg-white text-gray-600 border border-gray-200 hover:border-[#52b788] hover:text-[#2d6a4f] shadow-sm'
                   }`}
                 >
-                  {jumlahPerKategori[kat]}
-                </span>
+                  <span aria-hidden="true">{KATEGORI_EMOJI[kat]}</span>
+                  {KATEGORI_LABEL[kat]}
+                  <span
+                    className={`text-xs px-1.5 py-0.5 rounded-full ${
+                      aktifKategori === kat
+                        ? 'bg-white/20 text-white'
+                        : 'bg-gray-100 text-gray-500'
+                    }`}
+                  >
+                    {jumlahPerKategori[kat]}
+                  </span>
+                </button>
+              ))}
+            </div>
+
+            {/* Custom Sorting dropdown on desktop */}
+            <div ref={sortDesktopRef} className="relative shrink-0">
+              <button
+                type="button"
+                onClick={() => setOpenSortDesktop((prev) => !prev)}
+                className={`inline-flex items-center gap-2 px-4 py-2 rounded-full text-sm font-medium transition-all cursor-pointer shadow-sm ${
+                  openSortDesktop || sortOption !== 'default'
+                    ? 'bg-white border-[#2d6a4f] text-[#2d6a4f] ring-2 ring-[#2d6a4f]/15'
+                    : 'bg-white text-gray-700 border border-gray-200 hover:border-[#52b788]'
+                }`}
+                aria-haspopup="listbox"
+                aria-expanded={openSortDesktop}
+                aria-label="Urutkan produk berdasarkan harga"
+              >
+                <ArrowUpDown className="w-4 h-4 text-[#2d6a4f]" aria-hidden="true" />
+                <span>Urutkan: {currentSort.shortLabel}</span>
+                <ChevronDown
+                  className={`w-4 h-4 text-gray-400 transition-transform duration-200 ${
+                    openSortDesktop ? 'rotate-180 text-[#2d6a4f]' : ''
+                  }`}
+                  aria-hidden="true"
+                />
               </button>
-            ))}
+
+              <AnimatePresence>
+                {openSortDesktop && (
+                  <motion.div
+                    initial={{ opacity: 0, y: -6, scale: 0.98 }}
+                    animate={{ opacity: 1, y: 0, scale: 1 }}
+                    exit={{ opacity: 0, y: -6, scale: 0.98 }}
+                    transition={{ duration: 0.15, ease: 'easeOut' }}
+                    className="absolute right-0 mt-2 w-64 bg-white/95 backdrop-blur-md rounded-2xl shadow-xl border border-gray-100 p-1.5 z-40"
+                    role="listbox"
+                  >
+                    {SORT_OPTIONS.map((opt) => {
+                      const isSelected = sortOption === opt.value;
+                      return (
+                        <button
+                          key={opt.value}
+                          type="button"
+                          role="option"
+                          aria-selected={isSelected}
+                          onClick={() => {
+                            setSortOption(opt.value);
+                            setOpenSortDesktop(false);
+                          }}
+                          className={`w-full flex items-center justify-between px-3.5 py-2.5 rounded-xl text-xs sm:text-sm font-medium transition-colors text-left cursor-pointer ${
+                            isSelected
+                              ? 'bg-[#2d6a4f] text-white shadow-sm'
+                              : 'text-gray-700 hover:bg-[#d8f3dc]/60 hover:text-[#1b4332]'
+                          }`}
+                        >
+                          <span>{opt.label}</span>
+                          {isSelected && <Check className="w-4 h-4 text-white shrink-0 ml-2" aria-hidden="true" />}
+                        </button>
+                      );
+                    })}
+                  </motion.div>
+                )}
+              </AnimatePresence>
+            </div>
+          </div>
+
+          {/* Mobile Filter Bar: 2 Custom Dropdowns */}
+          <div className="md:hidden grid grid-cols-2 gap-2.5 mb-6">
+            {/* Custom Dropdown 1: Kategori */}
+            <div ref={kategoriMobileRef} className="relative">
+              <button
+                type="button"
+                onClick={() => {
+                  setOpenKategoriMobile((prev) => !prev);
+                  setOpenSortMobile(false);
+                }}
+                className={`w-full inline-flex items-center justify-between gap-1.5 px-3.5 py-2.5 rounded-full text-xs sm:text-sm font-medium transition-all cursor-pointer shadow-sm ${
+                  openKategoriMobile || aktifKategori !== 'semua'
+                    ? 'bg-white border-[#2d6a4f] text-[#2d6a4f] ring-2 ring-[#2d6a4f]/15'
+                    : 'bg-white text-gray-700 border border-gray-200 hover:border-[#52b788]'
+                }`}
+                aria-haspopup="listbox"
+                aria-expanded={openKategoriMobile}
+                aria-label="Filter kategori"
+              >
+                <div className="flex items-center gap-1.5 min-w-0">
+                  <span className="text-sm shrink-0" aria-hidden="true">{KATEGORI_EMOJI[aktifKategori]}</span>
+                  <span className="truncate">{KATEGORI_LABEL[aktifKategori]}</span>
+                </div>
+                <ChevronDown
+                  className={`w-4 h-4 text-gray-400 shrink-0 transition-transform duration-200 ${
+                    openKategoriMobile ? 'rotate-180 text-[#2d6a4f]' : ''
+                  }`}
+                  aria-hidden="true"
+                />
+              </button>
+
+              <AnimatePresence>
+                {openKategoriMobile && (
+                  <motion.div
+                    initial={{ opacity: 0, y: -6, scale: 0.98 }}
+                    animate={{ opacity: 1, y: 0, scale: 1 }}
+                    exit={{ opacity: 0, y: -6, scale: 0.98 }}
+                    transition={{ duration: 0.15, ease: 'easeOut' }}
+                    className="absolute left-0 mt-2 w-[calc(100vw-2rem)] max-w-[270px] bg-white/95 backdrop-blur-md rounded-2xl shadow-xl border border-gray-100 p-1.5 z-40"
+                    role="listbox"
+                  >
+                    {KATEGORI_TABS.map((kat) => {
+                      const isSelected = aktifKategori === kat;
+                      return (
+                        <button
+                          key={kat}
+                          type="button"
+                          role="option"
+                          aria-selected={isSelected}
+                          onClick={() => {
+                            setAktifKategori(kat);
+                            setOpenKategoriMobile(false);
+                          }}
+                          className={`w-full flex items-center justify-between px-3 py-2.5 rounded-xl text-xs sm:text-sm font-medium transition-colors text-left cursor-pointer ${
+                            isSelected
+                              ? 'bg-[#2d6a4f] text-white shadow-sm'
+                              : 'text-gray-700 hover:bg-[#d8f3dc]/60 hover:text-[#1b4332]'
+                          }`}
+                        >
+                          <div className="flex items-center gap-2 min-w-0">
+                            <span className="text-sm shrink-0" aria-hidden="true">{KATEGORI_EMOJI[kat]}</span>
+                            <span className="truncate">{KATEGORI_LABEL[kat]}</span>
+                          </div>
+                          <div className="flex items-center gap-1.5 shrink-0 ml-2">
+                            <span
+                              className={`text-[11px] px-1.5 py-0.5 rounded-full ${
+                                isSelected
+                                  ? 'bg-white/20 text-white'
+                                  : 'bg-gray-100 text-gray-500'
+                              }`}
+                            >
+                              {jumlahPerKategori[kat]}
+                            </span>
+                            {isSelected && <Check className="w-3.5 h-3.5 text-white" aria-hidden="true" />}
+                          </div>
+                        </button>
+                      );
+                    })}
+                  </motion.div>
+                )}
+              </AnimatePresence>
+            </div>
+
+            {/* Custom Dropdown 2: Sorting Harga */}
+            <div ref={sortMobileRef} className="relative">
+              <button
+                type="button"
+                onClick={() => {
+                  setOpenSortMobile((prev) => !prev);
+                  setOpenKategoriMobile(false);
+                }}
+                className={`w-full inline-flex items-center justify-between gap-1.5 px-3.5 py-2.5 rounded-full text-xs sm:text-sm font-medium transition-all cursor-pointer shadow-sm ${
+                  openSortMobile || sortOption !== 'default'
+                    ? 'bg-white border-[#2d6a4f] text-[#2d6a4f] ring-2 ring-[#2d6a4f]/15'
+                    : 'bg-white text-gray-700 border border-gray-200 hover:border-[#52b788]'
+                }`}
+                aria-haspopup="listbox"
+                aria-expanded={openSortMobile}
+                aria-label="Urutkan produk berdasarkan harga"
+              >
+                <div className="flex items-center gap-1.5 min-w-0">
+                  <ArrowUpDown className="w-3.5 h-3.5 text-[#2d6a4f] shrink-0" aria-hidden="true" />
+                  <span className="truncate">{currentSort.shortLabel}</span>
+                </div>
+                <ChevronDown
+                  className={`w-4 h-4 text-gray-400 shrink-0 transition-transform duration-200 ${
+                    openSortMobile ? 'rotate-180 text-[#2d6a4f]' : ''
+                  }`}
+                  aria-hidden="true"
+                />
+              </button>
+
+              <AnimatePresence>
+                {openSortMobile && (
+                  <motion.div
+                    initial={{ opacity: 0, y: -6, scale: 0.98 }}
+                    animate={{ opacity: 1, y: 0, scale: 1 }}
+                    exit={{ opacity: 0, y: -6, scale: 0.98 }}
+                    transition={{ duration: 0.15, ease: 'easeOut' }}
+                    className="absolute right-0 mt-2 w-[calc(100vw-2rem)] max-w-[250px] bg-white/95 backdrop-blur-md rounded-2xl shadow-xl border border-gray-100 p-1.5 z-40"
+                    role="listbox"
+                  >
+                    {SORT_OPTIONS.map((opt) => {
+                      const isSelected = sortOption === opt.value;
+                      return (
+                        <button
+                          key={opt.value}
+                          type="button"
+                          role="option"
+                          aria-selected={isSelected}
+                          onClick={() => {
+                            setSortOption(opt.value);
+                            setOpenSortMobile(false);
+                          }}
+                          className={`w-full flex items-center justify-between px-3 py-2.5 rounded-xl text-xs sm:text-sm font-medium transition-colors text-left cursor-pointer ${
+                            isSelected
+                              ? 'bg-[#2d6a4f] text-white shadow-sm'
+                              : 'text-gray-700 hover:bg-[#d8f3dc]/60 hover:text-[#1b4332]'
+                          }`}
+                        >
+                          <span className="truncate">{opt.label}</span>
+                          {isSelected && <Check className="w-4 h-4 text-white shrink-0 ml-2" aria-hidden="true" />}
+                        </button>
+                      );
+                    })}
+                  </motion.div>
+                )}
+              </AnimatePresence>
+            </div>
           </div>
 
           {/* Result count */}
-          <p className="text-sm text-gray-500 mb-6">
+          <p className="text-xs sm:text-sm text-gray-500 mb-6">
             Menampilkan{' '}
             <span className="font-semibold text-gray-700">{produkTampil.length}</span>{' '}
             produk
@@ -183,7 +453,7 @@ export default function KatalogClient({ produkList }: { produkList: Produk[] }) 
           <AnimatePresence mode="wait">
             {produkTampil.length > 0 ? (
               <motion.div
-                key={`${aktifKategori}-${query}`}
+                key={`${aktifKategori}-${query}-${sortOption}`}
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 exit={{ opacity: 0 }}
@@ -196,8 +466,15 @@ export default function KatalogClient({ produkList }: { produkList: Produk[] }) 
                     initial={{ opacity: 0, y: 24 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.35, delay: i * 0.05 }}
-                    className="group bg-white border border-gray-100 rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 hover:-translate-y-1 flex flex-col"
+                    className="group relative bg-white border border-gray-100 rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 hover:-translate-y-1 flex flex-col cursor-pointer"
                   >
+                    {/* Stretched link — klik di mana saja pada kartu untuk melihat detail */}
+                    <Link
+                      href={`/katalog/${produk.slug}`}
+                      className="absolute inset-0 z-0"
+                      aria-label={`Lihat detail ${produk.nama}`}
+                    />
+
                     {/* Image area */}
                     <div className="relative aspect-square overflow-hidden bg-[#d8f3dc]">
                       <Image
@@ -207,23 +484,10 @@ export default function KatalogClient({ produkList }: { produkList: Produk[] }) 
                         className="object-cover group-hover:scale-105 transition-transform duration-500"
                         sizes="(max-width: 640px) 100vw, (max-width: 768px) 50vw, (max-width: 1024px) 33vw, 25vw"
                       />
-
-                      {/* Hover overlay — CTA */}
-                      <div className="absolute inset-0 bg-[#2d6a4f]/0 group-hover:bg-[#2d6a4f]/20 transition-colors flex items-center justify-center opacity-0 group-hover:opacity-100">
-                        <a
-                          href={`https://wa.me/6281234567890?text=Halo%2C%20saya%20ingin%20pesan%20${encodeURIComponent(produk.nama)}`}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="bg-white text-[#2d6a4f] font-semibold text-sm px-4 py-2 rounded-full shadow-lg hover:bg-[#2d6a4f] hover:text-white transition-all"
-                          aria-label={`Pesan ${produk.nama}`}
-                        >
-                          Pesan Sekarang
-                        </a>
-                      </div>
                     </div>
 
                     {/* Info */}
-                    <div className="p-4 flex flex-col flex-1">
+                    <div className="p-4 flex flex-col flex-1 relative z-10 pointer-events-none">
                       <span className="text-xs text-[#52b788] font-medium">
                         {KATEGORI_LABEL[produk.kategori]}
                       </span>
@@ -238,11 +502,12 @@ export default function KatalogClient({ produkList }: { produkList: Produk[] }) 
                           {formatRupiah(produk.harga)}
                         </span>
                         <a
-                          href={`https://wa.me/6281234567890?text=Halo%2C%20saya%20ingin%20pesan%20${encodeURIComponent(produk.nama)}`}
+                          href={`https://wa.me/6287762093492?text=Halo%2C%20saya%20ingin%20pesan%20${encodeURIComponent(produk.nama)}`}
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="w-8 h-8 rounded-full bg-[#d8f3dc] hover:bg-[#2d6a4f] text-[#2d6a4f] hover:text-white flex items-center justify-center transition-all"
-                          aria-label={`Pesan ${produk.nama}`}
+                          className="pointer-events-auto w-8 h-8 rounded-full bg-[#d8f3dc] hover:bg-[#2d6a4f] text-[#2d6a4f] hover:text-white flex items-center justify-center transition-all shadow-sm hover:scale-105"
+                          aria-label={`Pesan ${produk.nama} via WhatsApp`}
+                          title="Pesan via WhatsApp"
                         >
                           <ShoppingBag className="w-4 h-4" aria-hidden="true" />
                         </a>
@@ -311,7 +576,7 @@ export default function KatalogClient({ produkList }: { produkList: Produk[] }) 
                 Sesuaikan desain, warna, dan ukuran sesuai kebutuhan dan budget Anda.
               </p>
               <a
-                href="https://wa.me/6281234567890?text=Halo%2C%20saya%20ingin%20tanya%20soal%20karangan%20bunga%20custom"
+                href="https://wa.me/6287762093492?text=Halo%2C%20saya%20ingin%20tanya%20soal%20karangan%20bunga%20custom"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="inline-flex items-center gap-2 bg-white text-[#2d6a4f] font-semibold px-6 py-3 rounded-full hover:bg-[#d8f3dc] transition-all hover:scale-105"

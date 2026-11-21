@@ -1,5 +1,6 @@
 import Link from 'next/link';
-import { Flower2, MapPin, Phone, Clock } from 'lucide-react';
+import Image from 'next/image';
+import { MapPin, Phone, Clock, Mail } from 'lucide-react';
 
 export default function Footer() {
   const currentYear = new Date().getFullYear();
@@ -10,15 +11,21 @@ export default function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10">
           {/* Brand */}
           <div className="lg:col-span-2">
-            <div className="flex items-center gap-2 mb-4">
-              <div className="w-9 h-9 rounded-full bg-[#52b788] flex items-center justify-center">
-                <Flower2 className="w-5 h-5 text-white" aria-hidden="true" />
+            <div className="flex items-center gap-2.5 mb-4">
+              <div className="w-10 h-10 rounded-full bg-white/95 flex items-center justify-center overflow-hidden shadow-sm p-1">
+                <Image
+                  src="/images/agroflorist.png"
+                  alt="Agro Florist Malang Logo"
+                  width={40}
+                  height={40}
+                  className="w-full h-full object-contain"
+                />
               </div>
               <div>
-                <span className="block font-bold text-white text-sm leading-none">
+                <span className="block font-bold text-white text-base leading-none">
                   Agro Florist
                 </span>
-                <span className="block text-xs text-[#52b788] leading-none">
+                <span className="block text-xs text-[#52b788] leading-none mt-1">
                   Malang
                 </span>
               </div>
@@ -70,10 +77,21 @@ export default function Footer() {
               <li className="flex items-center gap-2.5">
                 <Phone className="w-4 h-4 text-[#52b788] shrink-0" aria-hidden="true" />
                 <a
-                  href="https://wa.me/6281234567890"
+                  href="https://wa.me/6287762093492"
+                  target="_blank"
+                  rel="noopener noreferrer"
                   className="hover:text-white transition-colors"
                 >
-                  +62 812-3456-7890
+                  +62 877-6209-3492
+                </a>
+              </li>
+              <li className="flex items-center gap-2.5">
+                <Mail className="w-4 h-4 text-[#52b788] shrink-0" aria-hidden="true" />
+                <a
+                  href="mailto:agrogarden73@gmail.com"
+                  className="hover:text-white transition-colors"
+                >
+                  agrogarden73@gmail.com
                 </a>
               </li>
               <li className="flex items-start gap-2.5">

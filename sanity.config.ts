@@ -15,5 +15,9 @@ export default defineConfig({
     structureTool(),
   ],
 
+  auth: {
+    loginMethod: 'dual',
+  },
+
   schema,
 });

@@ -163,7 +163,7 @@ export default function ShowcaseSection() {
                   {cat.description}
                 </p>
                 <a
-                  href={`https://wa.me/6281234567890?text=${cat.waText}`}
+                  href={`https://wa.me/6287762093492?text=${cat.waText}`}
                   target="_blank"
                   rel="noopener noreferrer"
                   onClick={(e) => e.stopPropagation()}

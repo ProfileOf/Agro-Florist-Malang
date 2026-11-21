@@ -270,7 +270,7 @@ export default function CaraPesanSection() {
           className="text-center mt-14"
         >
           <a
-            href="https://wa.me/6281234567890?text=Halo%20Agro%20Florist%2C%20saya%20mau%20pesan..."
+            href="https://wa.me/6287762093492?text=Halo%20Agro%20Florist%2C%20saya%20mau%20pesan..."
             target="_blank"
             rel="noopener noreferrer"
             className="inline-flex items-center gap-2.5 bg-[#25D366] hover:bg-[#1ebe5d] text-white font-semibold px-8 py-3.5 rounded-full shadow-lg hover:shadow-xl transition-all hover:scale-105 text-sm"

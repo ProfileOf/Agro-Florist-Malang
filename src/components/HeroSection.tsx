@@ -75,7 +75,7 @@ export default function HeroSection() {
               className="flex flex-wrap gap-3 mb-8"
             >
               <a
-                href="https://wa.me/6281234567890?text=Halo%20Agro%20Florist%2C%20saya%20mau%20pesan..."
+                href="https://wa.me/6287762093492?text=Halo%20Agro%20Florist%2C%20saya%20mau%20pesan..."
                 target="_blank"
                 rel="noopener noreferrer"
                 className="flex items-center gap-2 bg-[#25D366] hover:bg-[#1ebe5d] text-white font-semibold px-6 py-3 rounded-full shadow-lg hover:shadow-xl transition-all hover:scale-105 text-sm"
