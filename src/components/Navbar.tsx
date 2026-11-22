@@ -20,6 +20,9 @@ export default function Navbar() {
   const pathname = usePathname();
   const router = useRouter();
 
+  const isDetailPage = pathname.startsWith('/katalog/') && pathname !== '/katalog';
+  const isSolidNav = scrolled || isDetailPage;
+
   useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 20);
     window.addEventListener('scroll', handleScroll);
@@ -49,7 +52,7 @@ export default function Navbar() {
   return (
     <header
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-        scrolled
+        isSolidNav
           ? 'bg-white/95 backdrop-blur-md shadow-md'
           : 'bg-transparent'
       }`}
@@ -57,26 +60,30 @@ export default function Navbar() {
       <div className="max-w-7xl mx-auto px-6 sm:px-10 lg:px-16">
         <div className="flex items-center justify-between h-[72px]">
           {/* Logo */}
-          <Link href="/" className="flex items-center gap-2.5 group">
-            <div className={`w-9 h-9 rounded-full flex items-center justify-center overflow-hidden transition-all group-hover:scale-105 ${
-              scrolled ? 'bg-white ring-1 ring-emerald-100 shadow-sm' : 'bg-white/95 backdrop-blur-sm shadow-sm'
-            }`}>
+          <Link href="/" className="flex items-center group py-1" aria-label="Beranda Agro Florist Malang">
+            <div className="relative h-11 sm:h-12 flex items-center group-hover:scale-105 transition-transform duration-300">
+              {/* Logo Putih: saat bg hijau gelap (belum scroll) — diperbesar agar seimbang dengan logo hijau */}
               <Image
-                src="/images/agroflorist.png"
-                alt="Agro Florist Malang Logo"
-                width={36}
-                height={36}
-                className="w-full h-full object-contain p-0.5"
+                src="/images/logo_putih.png"
+                alt="Agro Florist Malang"
+                width={180}
+                height={65}
+                className={`h-11 sm:h-12 w-auto object-contain transition-all duration-300 drop-shadow-sm scale-110 sm:scale-125 origin-left ${
+                  isSolidNav ? 'opacity-0 absolute pointer-events-none' : 'opacity-100'
+                }`}
                 priority
               />
-            </div>
-            <div className="leading-tight">
-              <span className={`block font-bold text-sm leading-none transition-colors ${scrolled ? 'text-[#14532D]' : 'text-white'}`}>
-                Agro Florist
-              </span>
-              <span className={`block text-xs leading-none transition-colors ${scrolled ? 'text-[#40916c]' : 'text-white/80'}`}>
-                Malang
-              </span>
+              {/* Logo Hijau: saat bg putih (scrolled) */}
+              <Image
+                src="/images/logo_hijau.png"
+                alt="Agro Florist Malang"
+                width={180}
+                height={52}
+                className={`h-10 sm:h-11 w-auto object-contain transition-opacity duration-300 ${
+                  isSolidNav ? 'opacity-100' : 'opacity-0 absolute pointer-events-none'
+                }`}
+                priority
+              />
             </div>
           </Link>
 
@@ -88,7 +95,7 @@ export default function Navbar() {
                   key={link.label}
                   onClick={() => handleNavClick(link.href)}
                   className={`px-4 py-2 text-sm font-medium rounded-lg transition-all cursor-pointer ${
-                    scrolled
+                    isSolidNav
                       ? 'text-gray-700 hover:text-[#008000] hover:bg-[#d8f3dc]/60'
                       : 'text-white hover:text-white hover:bg-white/20'
                   }`}
@@ -100,7 +107,7 @@ export default function Navbar() {
                   key={link.label}
                   href={link.href}
                   className={`px-4 py-2 text-sm font-medium rounded-lg transition-all ${
-                    scrolled
+                    isSolidNav
                       ? 'text-gray-700 hover:text-[#008000] hover:bg-[#d8f3dc]/60'
                       : 'text-white hover:text-white hover:bg-white/20'
                   }`}
@@ -118,7 +125,7 @@ export default function Navbar() {
               target="_blank"
               rel="noopener noreferrer"
               className={`flex items-center gap-2 text-sm font-medium px-4 py-2 rounded-full transition-all hover:shadow-lg hover:scale-105 ${
-                scrolled
+                isSolidNav
                   ? 'bg-[#008000] hover:bg-[#006800] text-white'
                   : 'bg-white hover:bg-white/90 text-[#008000]'
               }`}
@@ -136,7 +143,7 @@ export default function Navbar() {
               title="Studio Sanity"
               aria-label="Studio Sanity"
               className={`group/gear w-9 h-9 rounded-full flex items-center justify-center transition-all hover:scale-105 ${
-                scrolled
+                isSolidNav
                   ? 'bg-gray-100 hover:bg-[#d8f3dc]/60 text-gray-700 hover:text-[#008000] border border-gray-200 hover:border-[#008000]/30'
                   : 'bg-white/20 hover:bg-white/30 text-white backdrop-blur-sm'
               }`}
@@ -154,14 +161,14 @@ export default function Navbar() {
               title="Studio Sanity"
               aria-label="Studio Sanity"
               className={`p-2 rounded-lg transition-colors ${
-                scrolled ? 'text-gray-700 hover:bg-[#d8f3dc]/60' : 'text-white hover:bg-white/20'
+                isSolidNav ? 'text-gray-700 hover:bg-[#d8f3dc]/60' : 'text-white hover:bg-white/20'
               }`}
             >
               <Settings className="w-5 h-5" />
             </a>
             <button
               className={`p-2 rounded-lg transition-colors ${
-                scrolled ? 'text-gray-700 hover:bg-[#d8f3dc]/60' : 'text-white hover:bg-white/20'
+                isSolidNav ? 'text-gray-700 hover:bg-[#d8f3dc]/60' : 'text-white hover:bg-white/20'
               }`}
               onClick={() => setIsOpen(!isOpen)}
               aria-label="Toggle menu"

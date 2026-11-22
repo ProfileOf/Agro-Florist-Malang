@@ -11,24 +11,16 @@ export default function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10">
           {/* Brand */}
           <div className="lg:col-span-2">
-            <div className="flex items-center gap-2.5 mb-4">
-              <div className="w-10 h-10 rounded-full bg-white/95 flex items-center justify-center overflow-hidden shadow-sm p-1">
+            <div className="mb-5">
+              <Link href="/" className="inline-block group" aria-label="Beranda Agro Florist Malang">
                 <Image
-                  src="/images/agroflorist.png"
-                  alt="Agro Florist Malang Logo"
-                  width={40}
-                  height={40}
-                  className="w-full h-full object-contain"
+                  src="/images/logo_putih.png"
+                  alt="Agro Florist Malang"
+                  width={200}
+                  height={75}
+                  className="h-14 sm:h-16 w-auto object-contain transition-transform group-hover:scale-105 drop-shadow-sm"
                 />
-              </div>
-              <div>
-                <span className="block font-bold text-white text-base leading-none">
-                  Agro Florist
-                </span>
-                <span className="block text-xs text-[#52b788] leading-none mt-1">
-                  Malang
-                </span>
-              </div>
+              </Link>
             </div>
             <p className="text-gray-300 text-sm leading-relaxed max-w-xs mb-5">
               Florist terpercaya di Malang. Menyediakan karangan bunga duka
