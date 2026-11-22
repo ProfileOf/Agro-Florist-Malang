@@ -79,7 +79,7 @@ async function getProduk(slug: string): Promise<Produk | null> {
 async function getAllProduk(): Promise<Produk[]> {
   if (isSanityConfigured) {
     try {
-      const QUERY = `*[_type == "katalog"] | order(_createdAt asc) {
+      const QUERY = `*[_type == "katalog"] | order(_createdAt desc) {
         _id,
         nama,
         slug,
@@ -90,7 +90,7 @@ async function getAllProduk(): Promise<Produk[]> {
       }`;
       const items: SanityProduk[] = await client!.fetch(QUERY);
       if (items && items.length > 0) {
-        return items.map((item, i) => ({
+        const sanityList: Produk[] = items.map((item, i) => ({
           id: i + 1,
           nama: item.nama,
           slug: item.slug?.current ?? '',
@@ -99,6 +99,10 @@ async function getAllProduk(): Promise<Produk[]> {
           gambar: item.foto?.asset?.url ?? '/images/dukacita.jpg',
           deskripsi: item.deskripsi ?? '',
         }));
+
+        const sanitySlugs = new Set(sanityList.map((p) => p.slug));
+        const remainingDummy = dummyKatalog.filter((p) => !sanitySlugs.has(p.slug));
+        return [...sanityList, ...remainingDummy];
       }
     } catch {
       // fallback

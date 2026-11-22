@@ -22,7 +22,7 @@ type SanityProduk = {
   deskripsi: string | null;
 };
 
-const QUERY = `*[_type == "katalog"] | order(_createdAt asc) {
+const QUERY = `*[_type == "katalog"] | order(_createdAt desc) {
   _id,
   nama,
   slug,
@@ -39,7 +39,7 @@ export default async function KatalogPage() {
     try {
       const sanityData: SanityProduk[] = await client!.fetch(QUERY);
       if (sanityData && sanityData.length > 0) {
-        produkList = sanityData.map((item, i) => ({
+        const sanityList: Produk[] = sanityData.map((item, i) => ({
           id: i + 1,
           nama: item.nama,
           slug: item.slug?.current ?? '',
@@ -48,6 +48,11 @@ export default async function KatalogPage() {
           gambar: item.foto?.asset?.url ?? '/images/dukacita.jpg',
           deskripsi: item.deskripsi ?? '',
         }));
+
+        // Gabungkan produk Sanity (posisi teratas/terbaru) dengan dummy produk yang belum ada di Sanity
+        const sanitySlugs = new Set(sanityList.map((p) => p.slug));
+        const remainingDummy = dummyKatalog.filter((p) => !sanitySlugs.has(p.slug));
+        produkList = [...sanityList, ...remainingDummy];
       }
     } catch {
       // fallback ke dummy
