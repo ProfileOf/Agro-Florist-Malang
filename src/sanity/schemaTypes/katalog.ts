@@ -35,7 +35,8 @@ export const katalog = defineType({
         list: [
           { title: 'Duka Cita', value: 'duka-cita' },
           { title: 'Pernikahan (Wedding)', value: 'wedding' },
-          { title: 'Selamat & Sukses (Grand Opening)', value: 'grand-opening' },
+          { title: 'Grand Opening', value: 'grand-opening' },
+          { title: 'Selamat & Sukses', value: 'selamat-sukses' },
           { title: 'Buket & Lainnya', value: 'buket' },
         ],
       },

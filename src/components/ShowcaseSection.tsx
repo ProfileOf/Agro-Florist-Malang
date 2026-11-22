@@ -32,6 +32,14 @@ const categories = [
     waText: 'Halo%20Agro%20Florist%2C%20saya%20mau%20pesan%20bunga%20grand%20opening',
   },
   {
+    id: 'selamat-sukses',
+    label: 'Selamat & Sukses',
+    description: 'Papan bunga ucapan selamat atas wisuda, pelantikan, sertijab, dan prestasi.',
+    image: '/images/selamat_sukses.jpg',
+    filter: 'selamat-sukses',
+    waText: 'Halo%20Agro%20Florist%2C%20saya%20mau%20pesan%20bunga%20selamat%20dan%20sukses',
+  },
+  {
     id: 'buket-wisuda',
     label: 'Buket Wisuda',
     description: 'Buket bunga segar cantik untuk merayakan kelulusan dan pencapaian.',
@@ -129,7 +137,7 @@ export default function ShowcaseSection() {
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true, margin: '-60px' }}
-          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6"
+          className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-5 sm:gap-6"
         >
           {categories.map((cat) => (
             <motion.div

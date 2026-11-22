@@ -30,6 +30,7 @@ const KATEGORI_EMOJI: Record<Produk['kategori'] | 'semua', string> = {
   'duka-cita': '🌿',
   wedding: '💍',
   'grand-opening': '🎊',
+  'selamat-sukses': '🎉',
   buket: '💐',
 };
 

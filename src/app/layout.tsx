@@ -22,11 +22,13 @@ export const metadata: Metadata = {
     'Florist terpercaya di Malang. Menyediakan karangan bunga duka cita, wedding, grand opening, dan buket segar. Pesan mudah via WhatsApp, pengiriman ke seluruh Malang.',
   icons: {
     icon: [
+      { url: '/favicon.ico', sizes: 'any' },
+      { url: '/icon.png', type: 'image/png' },
       { url: '/images/agroflorist.png', type: 'image/png' },
     ],
-    shortcut: ['/images/agroflorist.png'],
+    shortcut: ['/favicon.ico'],
     apple: [
-      { url: '/images/agroflorist.png', type: 'image/png' },
+      { url: '/icon.png', type: 'image/png' },
     ],
   },
   keywords: [
@@ -55,6 +57,23 @@ export const metadata: Metadata = {
   },
 };
 
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'Florist',
+  name: 'Agro Florist Malang',
+  image: 'https://agrofloristmalang.com/images/logo_hijau.png',
+  logo: 'https://agrofloristmalang.com/images/agroflorist.png',
+  url: 'https://agrofloristmalang.com',
+  telephone: '+6287762093492',
+  email: 'agrogarden73@gmail.com',
+  address: {
+    '@type': 'PostalAddress',
+    addressLocality: 'Malang',
+    addressRegion: 'Jawa Timur',
+    addressCountry: 'ID',
+  },
+};
+
 export default function RootLayout({
   children,
 }: {
@@ -65,7 +84,13 @@ export default function RootLayout({
       lang="id"
       className={`${fraunces.variable} ${jakarta.variable} h-full antialiased`}
     >
-      <body className="min-h-full flex flex-col font-[family-name:var(--font-body)]">{children}</body>
+      <body className="min-h-full flex flex-col font-[family-name:var(--font-body)]">
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+        />
+        {children}
+      </body>
     </html>
   );
 }

@@ -2,7 +2,7 @@ export type Produk = {
   id: number;
   nama: string;
   slug: string;
-  kategori: 'duka-cita' | 'wedding' | 'grand-opening' | 'buket';
+  kategori: 'duka-cita' | 'wedding' | 'grand-opening' | 'selamat-sukses' | 'buket';
   harga: number;
   gambar: string;
   deskripsi: string;
@@ -13,6 +13,7 @@ export const KATEGORI_LABEL: Record<Produk['kategori'] | 'semua', string> = {
   'duka-cita': 'Duka Cita',
   wedding: 'Wedding',
   'grand-opening': 'Grand Opening',
+  'selamat-sukses': 'Selamat & Sukses',
   buket: 'Buket & Lainnya',
 };
 

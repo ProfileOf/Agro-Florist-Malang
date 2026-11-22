@@ -40,6 +40,7 @@ const KATEGORI_TABS: FilterKategori[] = [
   'duka-cita',
   'wedding',
   'grand-opening',
+  'selamat-sukses',
   'buket',
 ];
 
@@ -48,6 +49,7 @@ const KATEGORI_EMOJI: Record<FilterKategori, string> = {
   'duka-cita': '🌿',
   wedding: '💍',
   'grand-opening': '🎊',
+  'selamat-sukses': '🎉',
   buket: '💐',
 };
 
@@ -119,6 +121,7 @@ export default function KatalogClient({ produkList }: { produkList: Produk[] }) 
       'duka-cita': 0,
       wedding: 0,
       'grand-opening': 0,
+      'selamat-sukses': 0,
       buket: 0,
     };
     produkList.forEach((p) => {
