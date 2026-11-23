@@ -2,7 +2,15 @@ export type Produk = {
   id: number;
   nama: string;
   slug: string;
-  kategori: 'duka-cita' | 'wedding' | 'grand-opening' | 'selamat-sukses' | 'buket';
+  kategori:
+    | 'duka-cita'
+    | 'wedding'
+    | 'grand-opening'
+    | 'selamat-sukses'
+    | 'buket'
+    | 'bunga-standing'
+    | 'bibit-tanaman'
+    | 'fresh-flowers';
   harga: number;
   gambar: string;
   deskripsi: string;
@@ -11,10 +19,13 @@ export type Produk = {
 export const KATEGORI_LABEL: Record<Produk['kategori'] | 'semua', string> = {
   semua: 'Semua',
   'duka-cita': 'Duka Cita',
-  wedding: 'Wedding',
+  wedding: 'Pernikahan (Wedding)',
   'grand-opening': 'Grand Opening',
   'selamat-sukses': 'Selamat & Sukses',
-  buket: 'Buket & Lainnya',
+  buket: 'Buket Wisuda',
+  'bunga-standing': 'Bunga Standing',
+  'bibit-tanaman': 'Ucapan Bibit Pohon & Buah',
+  'fresh-flowers': 'Fresh Flowers',
 };
 
 export const dummyKatalog: Produk[] = [
@@ -156,5 +167,45 @@ export const dummyKatalog: Produk[] = [
     harga: 180000,
     gambar: '/images/grad.jpg',
     deskripsi: 'Buket bunga kering estetik yang tahan lama, hiasan rumah sekaligus hadiah unik.',
+  },
+  // Selamat & Sukses
+  {
+    id: 16,
+    nama: 'Papan Bunga Selamat & Sukses Prestasi',
+    slug: 'papan-bunga-selamat-sukses-prestasi',
+    kategori: 'selamat-sukses',
+    harga: 650000,
+    gambar: '/images/selamat_sukses.jpg',
+    deskripsi: 'Papan bunga ucapan selamat atas wisuda, sertijab, pelantikan, dan pencapaian prestasi.',
+  },
+  // Bunga Standing
+  {
+    id: 17,
+    nama: 'Standing Flower Elegan Eksklusif',
+    slug: 'standing-flower-elegan-eksklusif',
+    kategori: 'bunga-standing',
+    harga: 750000,
+    gambar: '/images/standing.jpg',
+    deskripsi: 'Standing flower mewah cocok untuk ucapan formal, grand opening, atau belasungkawa terhormat.',
+  },
+  // Ucapan Bibit Pohon & Buah
+  {
+    id: 18,
+    nama: 'Hampers Bibit Pohon & Buah Edukatif',
+    slug: 'hampers-bibit-pohon-buah-edukatif',
+    kategori: 'bibit-tanaman',
+    harga: 350000,
+    gambar: '/images/bibitpohon.jpg',
+    deskripsi: 'Ucapan unik ramah lingkungan berupa bibit pohon dan tanaman buah segar berhias pita cantik.',
+  },
+  // Fresh Flowers
+  {
+    id: 19,
+    nama: 'Rangkaian Fresh Flowers Segar Pilihan',
+    slug: 'rangkaian-fresh-flowers-segar-pilihan',
+    kategori: 'fresh-flowers',
+    harga: 450000,
+    gambar: '/images/fresh_flower.jpg',
+    deskripsi: 'Rangkaian bunga segar harian dengan aroma harum alami, dipetik langsung dari kebun florist.',
   },
 ];

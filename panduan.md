@@ -50,7 +50,7 @@ Setelah berada di dalam CMS, di menu sebelah kiri (Content Structure) Anda akan 
 | **Nama Karangan Bunga** | Masukkan nama produk yang menarik dan jelas. <br>Contoh: *Papan Bunga Duka Cita Premium*, *Standing Flower Wedding Elegan*. |
 | **Slug (URL)** | Klik tombol **Generate** di samping kanan kolom ini. Sistem akan otomatis membuat link URL berdasarkan nama produk. |
 | **Harga (Rp)** | Masukkan angka harga **tanpa tanda titik atau Rp**. <br>Contoh: ketik `500000` (sistem website otomatis menampilkannya sebagai *Rp 500.000*). |
-| **Kategori** | Pilih salah satu kategori yang sesuai dari menu dropdown: <br>• **Duka Cita** <br>• **Pernikahan (Wedding)** <br>• **Grand Opening** <br>• **Selamat & Sukses** <br>• **Buket & Lainnya** |
+| **Kategori** | Pilih salah satu kategori yang sesuai dari menu dropdown: <br>• **Duka Cita** <br>• **Pernikahan (Wedding)** <br>• **Grand Opening** <br>• **Selamat & Sukses** <br>• **Buket Wisuda** <br>• **Bunga Standing** <br>• **Ucapan Bibit Pohon & Buah** <br>• **Fresh Flowers** |
 | **Foto Produk** | Klik tombol **Upload** atau drag-and-drop foto bunga ke area ini. <br>*(Tips: Setelah foto ter-upload, Anda bisa klik tombol **Edit** pada foto untuk mengatur titik fokus/crop agar posisi bunga tetap proporsional di website).* |
 | **Deskripsi Singkat** | Tuliskan rincian produk (opsional namun disarankan). <br>Contoh: bahan bunga segar, ukuran papan (misal 2x1.2 meter), waktu pengerjaan, atau bonus pita nama. |
 

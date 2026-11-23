@@ -42,6 +42,9 @@ const KATEGORI_TABS: FilterKategori[] = [
   'grand-opening',
   'selamat-sukses',
   'buket',
+  'bunga-standing',
+  'bibit-tanaman',
+  'fresh-flowers',
 ];
 
 const KATEGORI_EMOJI: Record<FilterKategori, string> = {
@@ -51,6 +54,9 @@ const KATEGORI_EMOJI: Record<FilterKategori, string> = {
   'grand-opening': '🎊',
   'selamat-sukses': '🎉',
   buket: '💐',
+  'bunga-standing': '🪴',
+  'bibit-tanaman': '🌱',
+  'fresh-flowers': '🌹',
 };
 
 export default function KatalogClient({ produkList }: { produkList: Produk[] }) {
@@ -66,10 +72,12 @@ export default function KatalogClient({ produkList }: { produkList: Produk[] }) 
   const [sortOption, setSortOption] = useState<SortOption>('default');
 
   const [openKategoriMobile, setOpenKategoriMobile] = useState(false);
+  const [openKategoriDesktop, setOpenKategoriDesktop] = useState(false);
   const [openSortDesktop, setOpenSortDesktop] = useState(false);
   const [openSortMobile, setOpenSortMobile] = useState(false);
 
   const kategoriMobileRef = useRef<HTMLDivElement>(null);
+  const kategoriDesktopRef = useRef<HTMLDivElement>(null);
   const sortDesktopRef = useRef<HTMLDivElement>(null);
   const sortMobileRef = useRef<HTMLDivElement>(null);
 
@@ -78,6 +86,9 @@ export default function KatalogClient({ produkList }: { produkList: Produk[] }) 
       const target = event.target as Node;
       if (kategoriMobileRef.current && !kategoriMobileRef.current.contains(target)) {
         setOpenKategoriMobile(false);
+      }
+      if (kategoriDesktopRef.current && !kategoriDesktopRef.current.contains(target)) {
+        setOpenKategoriDesktop(false);
       }
       if (sortDesktopRef.current && !sortDesktopRef.current.contains(target)) {
         setOpenSortDesktop(false);
@@ -123,9 +134,14 @@ export default function KatalogClient({ produkList }: { produkList: Produk[] }) 
       'grand-opening': 0,
       'selamat-sukses': 0,
       buket: 0,
+      'bunga-standing': 0,
+      'bibit-tanaman': 0,
+      'fresh-flowers': 0,
     };
     produkList.forEach((p) => {
-      map[p.kategori] += 1;
+      if (map[p.kategori] !== undefined) {
+        map[p.kategori] += 1;
+      }
     });
     return map;
   }, [produkList]);
@@ -192,43 +208,119 @@ export default function KatalogClient({ produkList }: { produkList: Produk[] }) 
         </div>
 
         <div className="max-w-6xl mx-auto px-4 sm:px-6 py-10">
-          {/* Desktop Filter Bar: Category Pills + Custom Sorting Dropdown */}
-          <div className="hidden md:flex flex-wrap items-center justify-between gap-4 mb-6">
-            {/* Category tabs */}
-            <div className="flex flex-wrap items-center gap-2" role="tablist" aria-label="Filter kategori">
-              {KATEGORI_TABS.map((kat) => (
+          {/* Desktop Filter Bar: Category Dropdown + Custom Sorting Dropdown */}
+          <div className="hidden md:flex items-center justify-between gap-4 mb-6">
+            {/* Left: Category Dropdown */}
+            <div className="flex items-center gap-3">
+              <div ref={kategoriDesktopRef} className="relative">
                 <button
-                  key={kat}
-                  role="tab"
-                  aria-selected={aktifKategori === kat}
-                  onClick={() => setAktifKategori(kat)}
-                  className={`inline-flex items-center gap-1.5 px-4 py-2 rounded-full text-sm font-medium transition-all cursor-pointer ${
-                    aktifKategori === kat
-                      ? 'bg-[#2d6a4f] text-white shadow-md scale-105'
-                      : 'bg-white text-gray-600 border border-gray-200 hover:border-[#52b788] hover:text-[#2d6a4f] shadow-sm'
+                  type="button"
+                  onClick={() => {
+                    setOpenKategoriDesktop((prev) => !prev);
+                    setOpenSortDesktop(false);
+                  }}
+                  className={`inline-flex items-center gap-2 px-4 py-2.5 rounded-full text-sm font-medium transition-all cursor-pointer shadow-sm ${
+                    openKategoriDesktop || aktifKategori !== 'semua'
+                      ? 'bg-white border-[#2d6a4f] text-[#2d6a4f] ring-2 ring-[#2d6a4f]/15'
+                      : 'bg-white text-gray-700 border border-gray-200 hover:border-[#52b788]'
                   }`}
+                  aria-haspopup="listbox"
+                  aria-expanded={openKategoriDesktop}
+                  aria-label="Filter kategori"
                 >
-                  <span aria-hidden="true">{KATEGORI_EMOJI[kat]}</span>
-                  {KATEGORI_LABEL[kat]}
+                  <span className="text-gray-400 text-xs font-normal">Kategori:</span>
+                  <span className="text-base" aria-hidden="true">{KATEGORI_EMOJI[aktifKategori]}</span>
+                  <span className="font-semibold text-gray-800">{KATEGORI_LABEL[aktifKategori]}</span>
                   <span
-                    className={`text-xs px-1.5 py-0.5 rounded-full ${
-                      aktifKategori === kat
-                        ? 'bg-white/20 text-white'
-                        : 'bg-gray-100 text-gray-500'
+                    className={`text-xs px-2 py-0.5 rounded-full font-medium ${
+                      aktifKategori !== 'semua'
+                        ? 'bg-[#2d6a4f]/10 text-[#2d6a4f]'
+                        : 'bg-gray-100 text-gray-600'
                     }`}
                   >
-                    {jumlahPerKategori[kat]}
+                    {jumlahPerKategori[aktifKategori]}
                   </span>
+                  <ChevronDown
+                    className={`w-4 h-4 text-gray-400 transition-transform duration-200 ${
+                      openKategoriDesktop ? 'rotate-180 text-[#2d6a4f]' : ''
+                    }`}
+                    aria-hidden="true"
+                  />
                 </button>
-              ))}
+
+                <AnimatePresence>
+                  {openKategoriDesktop && (
+                    <motion.div
+                      initial={{ opacity: 0, y: -6, scale: 0.98 }}
+                      animate={{ opacity: 1, y: 0, scale: 1 }}
+                      exit={{ opacity: 0, y: -6, scale: 0.98 }}
+                      transition={{ duration: 0.15, ease: 'easeOut' }}
+                      className="absolute left-0 mt-2 w-72 bg-white/95 backdrop-blur-md rounded-2xl shadow-xl border border-gray-100 p-1.5 z-40 max-h-[380px] overflow-y-auto"
+                      role="listbox"
+                    >
+                      {KATEGORI_TABS.map((kat) => {
+                        const isSelected = aktifKategori === kat;
+                        return (
+                          <button
+                            key={kat}
+                            type="button"
+                            role="option"
+                            aria-selected={isSelected}
+                            onClick={() => {
+                              setAktifKategori(kat);
+                              setOpenKategoriDesktop(false);
+                            }}
+                            className={`w-full flex items-center justify-between px-3.5 py-2.5 rounded-xl text-sm font-medium transition-colors text-left cursor-pointer ${
+                              isSelected
+                                ? 'bg-[#2d6a4f] text-white shadow-sm'
+                                : 'text-gray-700 hover:bg-[#d8f3dc]/60 hover:text-[#1b4332]'
+                            }`}
+                          >
+                            <div className="flex items-center gap-2.5 min-w-0">
+                              <span className="text-base shrink-0" aria-hidden="true">{KATEGORI_EMOJI[kat]}</span>
+                              <span className="truncate">{KATEGORI_LABEL[kat]}</span>
+                            </div>
+                            <div className="flex items-center gap-2 shrink-0 ml-2">
+                              <span
+                                className={`text-xs px-2 py-0.5 rounded-full ${
+                                  isSelected
+                                    ? 'bg-white/20 text-white'
+                                    : 'bg-gray-100 text-gray-500'
+                                }`}
+                              >
+                                {jumlahPerKategori[kat]}
+                              </span>
+                              {isSelected && <Check className="w-4 h-4 text-white shrink-0 ml-1" aria-hidden="true" />}
+                            </div>
+                          </button>
+                        );
+                      })}
+                    </motion.div>
+                  )}
+                </AnimatePresence>
+              </div>
+
+              {/* Reset filter shortcut */}
+              {aktifKategori !== 'semua' && (
+                <button
+                  type="button"
+                  onClick={() => setAktifKategori('semua')}
+                  className="text-xs text-gray-500 hover:text-[#2d6a4f] font-medium hover:underline cursor-pointer transition-colors"
+                >
+                  Reset Kategori
+                </button>
+              )}
             </div>
 
             {/* Custom Sorting dropdown on desktop */}
             <div ref={sortDesktopRef} className="relative shrink-0">
               <button
                 type="button"
-                onClick={() => setOpenSortDesktop((prev) => !prev)}
-                className={`inline-flex items-center gap-2 px-4 py-2 rounded-full text-sm font-medium transition-all cursor-pointer shadow-sm ${
+                onClick={() => {
+                  setOpenSortDesktop((prev) => !prev);
+                  setOpenKategoriDesktop(false);
+                }}
+                className={`inline-flex items-center gap-2 px-4 py-2.5 rounded-full text-sm font-medium transition-all cursor-pointer shadow-sm ${
                   openSortDesktop || sortOption !== 'default'
                     ? 'bg-white border-[#2d6a4f] text-[#2d6a4f] ring-2 ring-[#2d6a4f]/15'
                     : 'bg-white text-gray-700 border border-gray-200 hover:border-[#52b788]'

@@ -32,6 +32,9 @@ const KATEGORI_EMOJI: Record<Produk['kategori'] | 'semua', string> = {
   'grand-opening': '🎊',
   'selamat-sukses': '🎉',
   buket: '💐',
+  'bunga-standing': '🪴',
+  'bibit-tanaman': '🌱',
+  'fresh-flowers': '🌹',
 };
 
 type SanityProduk = {
