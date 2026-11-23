@@ -62,10 +62,10 @@ export default function Footer() {
               Kontak
             </h3>
             <ul className="space-y-3 text-sm text-gray-300">
-              <li className="flex items-start gap-2.5">
+              {/* <li className="flex items-start gap-2.5">
                 <MapPin className="w-4 h-4 text-[#52b788] mt-0.5 shrink-0" aria-hidden="true" />
                 <span>Jl. Contoh No. 123, Kec. Lowokwaru, Kota Malang, Jawa Timur</span>
-              </li>
+              </li> */}
               <li className="flex items-center gap-2.5">
                 <Phone className="w-4 h-4 text-[#52b788] shrink-0" aria-hidden="true" />
                 <a
