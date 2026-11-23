@@ -7,7 +7,7 @@ deskripsi: "Rekomendasi karangan bunga ucapan selamat dan sukses di Malang untuk
 gambar: "/images/selamat_sukses.jpg"
 waktuBaca: "3 min baca"
 tanggal: "2026-11-23"
-penulis: "Rangga Dwi Saputra"
+penulis: "Tim Agro Florist Malang"
 ringkasan: "Papan bunga Selamat & Sukses merupakan bentuk apresiasi resmi atas dedikasi, amanah baru, dan capaian membanggakan relasi Anda."
 faq:
   - tanya: "Acara apa saja yang cocok dikirimi papan bunga Selamat & Sukses?"

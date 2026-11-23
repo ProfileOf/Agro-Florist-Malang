@@ -7,7 +7,7 @@ deskripsi: "Panduan lengkap memilih karangan bunga papan duka cita di Malang, et
 gambar: "/images/dukacita.jpg"
 waktuBaca: "3 min baca"
 tanggal: "2026-11-23"
-penulis: "Rangga Dwi Saputra"
+penulis: "Tim Agro Florist Malang"
 ringkasan: "Karangan bunga duka cita merupakan ungkapan belasungkawa dan penghormatan terakhir yang tulus untuk keluarga yang ditinggalkan."
 faq:
   - tanya: "Kapan waktu terbaik mengirimkan karangan bunga duka cita?"

@@ -7,7 +7,7 @@ deskripsi: "Mengenal keunggulan standing flower untuk ucapan selamat, duka cita,
 gambar: "/images/standing.jpg"
 waktuBaca: "3 min baca"
 tanggal: "2026-11-23"
-penulis: "Rangga Dwi Saputra"
+penulis: "Tim Agro Florist Malang"
 ringkasan: "Standing flower adalah rangkaian bunga artistik berpenyangga besi atau kayu yang menjadi solusi terbaik untuk ucapan berkelas di dalam ruangan."
 faq:
   - tanya: "Apa perbedaan utama antara papan bunga dan standing flower?"

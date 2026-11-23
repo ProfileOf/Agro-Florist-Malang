@@ -7,7 +7,7 @@ deskripsi: "Pentingnya mengirimkan papan bunga peresmian usaha (grand opening) d
 gambar: "/images/go.jpg"
 waktuBaca: "3 min baca"
 tanggal: "2026-11-23"
-penulis: "Rangga Dwi Saputra"
+penulis: "Tim Agro Florist Malang"
 ringkasan: "Papan bunga grand opening adalah bentuk promosi visual sekaligus doa kesuksesan yang memeriahkan hari pertama peresmian toko, resto, atau kantor."
 faq:
   - tanya: "Kapan papan bunga grand opening harus dipasang?"

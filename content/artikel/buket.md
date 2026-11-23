@@ -7,7 +7,7 @@ deskripsi: "Inspirasi buket bunga wisuda di Malang: kombinasi mawar, matahari, s
 gambar: "/images/grad.jpg"
 waktuBaca: "3 min baca"
 tanggal: "2026-11-23"
-penulis: "Rangga Dwi Saputra"
+penulis: "Tim Agro Florist Malang"
 ringkasan: "Buket bunga wisuda adalah mahkota penghargaan atas perjuangan menyelesaikan bangku kuliah, hadiah terindah untuk hari kelulusan."
 faq:
   - tanya: "Bunga apa yang paling cocok untuk wisuda?"

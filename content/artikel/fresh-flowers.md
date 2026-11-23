@@ -7,7 +7,7 @@ deskripsi: "Keindahan rangkaian bunga potong segar harian (fresh flowers) di Mal
 gambar: "/images/fresh_flower.jpg"
 waktuBaca: "3 min baca"
 tanggal: "2026-11-23"
-penulis: "Rangga Dwi Saputra"
+penulis: "Tim Agro Florist Malang"
 ringkasan: "Fresh flowers membawa energi alami, keharuman segar, dan keanggunan hidup yang tidak bisa digantikan oleh bunga artifisial."
 faq:
   - tanya: "Dari mana asal bunga segar yang digunakan di Agro Florist?"

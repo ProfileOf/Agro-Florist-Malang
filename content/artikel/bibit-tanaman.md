@@ -7,7 +7,7 @@ deskripsi: "Mengenal pohon ucapan dan bibit buah sebagai tren hadiah ucapan sela
 gambar: "/images/bibitpohon.jpg"
 waktuBaca: "4 min baca"
 tanggal: "2026-11-23"
-penulis: "Rangga Dwi Saputra"
+penulis: "Tim Agro Florist Malang"
 ringkasan: "Ucapan bibit pohon & buah (pohon ucapan) adalah alternatif hadiah ucapan selamat yang menggunakan tanaman hidup atau bibit buah dalam pot/polybag lengkap dengan papan atau kartu ucapan, menggantikan karangan bunga potong yang cepat layu."
 faq:
   - tanya: "Apakah pohon ucapan sudah termasuk pot dan kartu ucapan?"

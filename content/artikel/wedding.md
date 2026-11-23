@@ -7,7 +7,7 @@ deskripsi: "Inspirasi dekorasi bunga pernikahan, buket pengantin, dan papan bung
 gambar: "/images/wedding.jpg"
 waktuBaca: "3 min baca"
 tanggal: "2026-11-23"
-penulis: "Rangga Dwi Saputra"
+penulis: "Tim Agro Florist Malang"
 ringkasan: "Bunga pernikahan adalah bahasa cinta yang mengubah hari bahagia menjadi kenangan visual tak terlupakan bagi kedua mempelai dan para tamu."
 faq:
   - tanya: "Berapa hari sebelumnya pemesanan papan bunga wedding sebaiknya dilakukan?"

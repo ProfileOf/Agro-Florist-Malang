@@ -95,7 +95,7 @@ export default async function DetailArtikelPage({
         image: `https://agrofloristmalang.com${artikel.gambar}`,
         author: {
           '@type': 'Person',
-          name: artikel.penulis || 'Rangga Dwi Saputra',
+          name: artikel.penulis || 'Tim Agro Florist Malang',
           jobTitle: 'Content Specialist & Author',
           worksFor: {
             '@type': 'Organization',
@@ -116,18 +116,18 @@ export default async function DetailArtikelPage({
       },
       ...(artikel.faq && artikel.faq.length > 0
         ? [
-            {
-              '@type': 'FAQPage',
-              mainEntity: artikel.faq.map((item) => ({
-                '@type': 'Question',
-                name: item.tanya,
-                acceptedAnswer: {
-                  '@type': 'Answer',
-                  text: item.jawab,
-                },
-              })),
-            },
-          ]
+          {
+            '@type': 'FAQPage',
+            mainEntity: artikel.faq.map((item) => ({
+              '@type': 'Question',
+              name: item.tanya,
+              acceptedAnswer: {
+                '@type': 'Answer',
+                text: item.jawab,
+              },
+            })),
+          },
+        ]
         : []),
     ],
   };
@@ -163,7 +163,7 @@ export default async function DetailArtikelPage({
         {/* Article Container */}
         <div className="max-w-4xl mx-auto px-4 sm:px-6">
           <article className="bg-white rounded-3xl shadow-sm border border-gray-100 overflow-hidden p-6 sm:p-10 lg:p-12">
-            
+
             {/* Header */}
             <div className="mb-8">
               <div className="flex flex-wrap items-center gap-2 mb-4">
@@ -217,7 +217,7 @@ export default async function DetailArtikelPage({
 
             {/* Byline Penulis (Clean & Sederhana) */}
             <p className="mt-8 text-sm sm:text-base text-gray-700 font-medium">
-              {artikel.penulis || 'Rangga Dwi Saputra'} – Penulis
+              {artikel.penulis || 'Tim Agro Florist Malang'} – Penulis
             </p>
 
             {/* FAQ Accordion Section */}
