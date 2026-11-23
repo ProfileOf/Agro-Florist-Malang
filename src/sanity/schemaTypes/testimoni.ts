@@ -15,7 +15,7 @@ export const testimoni = defineType({
       name: 'jabatanAtauKota',
       title: 'Jabatan / Lokasi (Opsional)',
       type: 'string',
-      description: 'Contoh: PT Sekawan Media / Malang',
+      description: 'Contoh: PT AddaReady / Malang',
     }),
     defineField({
       name: 'pesan',

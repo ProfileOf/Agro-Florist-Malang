@@ -37,7 +37,7 @@ const dummyTestimoni: TestimoniItem[] = [
   },
   {
     id: 2,
-    nama: 'PT Sekawan Media',
+    nama: 'PT AddaReady',
     jabatanAtauKota: 'Grand Opening Kantor Baru',
     pesan: 'Kami memesan standing flower untuk grand opening kantor. Hasilnya mewah, sangat sesuai ekspektasi. Tim Agro Florist sangat profesional dan responsif.',
     rating: 5,
