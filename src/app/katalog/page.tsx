@@ -52,7 +52,8 @@ export default async function KatalogPage() {
         // Gabungkan produk Sanity (posisi teratas/terbaru) dengan dummy produk yang belum ada di Sanity
         const sanitySlugs = new Set(sanityList.map((p) => p.slug));
         const remainingDummy = dummyKatalog.filter((p) => !sanitySlugs.has(p.slug));
-        produkList = [...sanityList, ...remainingDummy];
+        const combined = [...sanityList, ...remainingDummy];
+        produkList = combined.map((p, idx) => ({ ...p, id: idx + 1 }));
       }
     } catch {
       // fallback ke dummy

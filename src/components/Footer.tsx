@@ -40,7 +40,7 @@ export default function Footer() {
               {[
                 { label: 'Beranda', href: '/' },
                 { label: 'Katalog Produk', href: '/katalog' },
-                { label: 'Produk Unggulan', href: '/#showcase' },
+                { label: 'Artikel Bunga', href: '/artikel' },
                 { label: 'Cara Pesan', href: '/#cara-pesan' },
                 { label: 'Testimoni', href: '/#testimoni' },
               ].map((item) => (
@@ -103,7 +103,17 @@ export default function Footer() {
       <div className="border-t border-white/10">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 py-4 flex flex-col sm:flex-row items-center justify-between gap-2 text-xs text-gray-400">
           <p>© {currentYear} Agro Florist Malang. Hak cipta dilindungi.</p>
-          <p>Dibuat dengan ❤️ di Malang</p>
+          <p>
+            Dibuat bersama{' '}
+            <a
+              href="https://www.instagram.com/addaready"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-[#52b788] hover:text-white font-medium hover:underline transition-colors"
+            >
+              AddaReady
+            </a>
+          </p>
         </div>
       </div>
     </footer>

@@ -11,6 +11,8 @@ import {
   ArrowUpDown,
   ChevronDown,
   Check,
+  BookOpen,
+  ArrowRight,
 } from 'lucide-react';
 import Link from 'next/link';
 import Image from 'next/image';
@@ -312,69 +314,85 @@ export default function KatalogClient({ produkList }: { produkList: Produk[] }) 
               )}
             </div>
 
-            {/* Custom Sorting dropdown on desktop */}
-            <div ref={sortDesktopRef} className="relative shrink-0">
-              <button
-                type="button"
-                onClick={() => {
-                  setOpenSortDesktop((prev) => !prev);
-                  setOpenKategoriDesktop(false);
-                }}
-                className={`inline-flex items-center gap-2 px-4 py-2.5 rounded-full text-sm font-medium transition-all cursor-pointer shadow-sm ${
-                  openSortDesktop || sortOption !== 'default'
-                    ? 'bg-white border-[#2d6a4f] text-[#2d6a4f] ring-2 ring-[#2d6a4f]/15'
-                    : 'bg-white text-gray-700 border border-gray-200 hover:border-[#52b788]'
-                }`}
-                aria-haspopup="listbox"
-                aria-expanded={openSortDesktop}
-                aria-label="Urutkan produk berdasarkan harga"
+            {/* Custom Sorting dropdown on desktop + Baca Artikel Button */}
+            <div className="flex items-center gap-3">
+              <Link
+                href={aktifKategori === 'semua' ? '/artikel' : `/artikel/${aktifKategori}`}
+                className="inline-flex items-center gap-1.5 px-4 py-2.5 rounded-full text-xs sm:text-sm font-semibold bg-[#d8f3dc]/60 hover:bg-[#b7e4c7] text-[#1b4332] border border-[#52b788]/30 shadow-sm hover:shadow transition-all hover:scale-105 cursor-pointer"
+                title="Baca artikel terkait"
               >
-                <ArrowUpDown className="w-4 h-4 text-[#2d6a4f]" aria-hidden="true" />
-                <span>Urutkan: {currentSort.shortLabel}</span>
-                <ChevronDown
-                  className={`w-4 h-4 text-gray-400 transition-transform duration-200 ${
-                    openSortDesktop ? 'rotate-180 text-[#2d6a4f]' : ''
-                  }`}
-                  aria-hidden="true"
-                />
-              </button>
+                <BookOpen className="w-4 h-4 text-[#2d6a4f]" aria-hidden="true" />
+                <span>
+                  {aktifKategori === 'semua'
+                    ? 'Baca Artikel'
+                    : `Artikel ${KATEGORI_LABEL[aktifKategori]}`}
+                </span>
+                <ArrowRight className="w-3.5 h-3.5 text-[#2d6a4f]" aria-hidden="true" />
+              </Link>
 
-              <AnimatePresence>
-                {openSortDesktop && (
-                  <motion.div
-                    initial={{ opacity: 0, y: -6, scale: 0.98 }}
-                    animate={{ opacity: 1, y: 0, scale: 1 }}
-                    exit={{ opacity: 0, y: -6, scale: 0.98 }}
-                    transition={{ duration: 0.15, ease: 'easeOut' }}
-                    className="absolute right-0 mt-2 w-64 bg-white/95 backdrop-blur-md rounded-2xl shadow-xl border border-gray-100 p-1.5 z-40"
-                    role="listbox"
-                  >
-                    {SORT_OPTIONS.map((opt) => {
-                      const isSelected = sortOption === opt.value;
-                      return (
-                        <button
-                          key={opt.value}
-                          type="button"
-                          role="option"
-                          aria-selected={isSelected}
-                          onClick={() => {
-                            setSortOption(opt.value);
-                            setOpenSortDesktop(false);
-                          }}
-                          className={`w-full flex items-center justify-between px-3.5 py-2.5 rounded-xl text-xs sm:text-sm font-medium transition-colors text-left cursor-pointer ${
-                            isSelected
-                              ? 'bg-[#2d6a4f] text-white shadow-sm'
-                              : 'text-gray-700 hover:bg-[#d8f3dc]/60 hover:text-[#1b4332]'
-                          }`}
-                        >
-                          <span>{opt.label}</span>
-                          {isSelected && <Check className="w-4 h-4 text-white shrink-0 ml-2" aria-hidden="true" />}
-                        </button>
-                      );
-                    })}
-                  </motion.div>
-                )}
-              </AnimatePresence>
+              <div ref={sortDesktopRef} className="relative shrink-0">
+                <button
+                  type="button"
+                  onClick={() => {
+                    setOpenSortDesktop((prev) => !prev);
+                    setOpenKategoriDesktop(false);
+                  }}
+                  className={`inline-flex items-center gap-2 px-4 py-2.5 rounded-full text-sm font-medium transition-all cursor-pointer shadow-sm ${
+                    openSortDesktop || sortOption !== 'default'
+                      ? 'bg-white border-[#2d6a4f] text-[#2d6a4f] ring-2 ring-[#2d6a4f]/15'
+                      : 'bg-white text-gray-700 border border-gray-200 hover:border-[#52b788]'
+                  }`}
+                  aria-haspopup="listbox"
+                  aria-expanded={openSortDesktop}
+                  aria-label="Urutkan produk berdasarkan harga"
+                >
+                  <ArrowUpDown className="w-4 h-4 text-[#2d6a4f]" aria-hidden="true" />
+                  <span>Urutkan: {currentSort.shortLabel}</span>
+                  <ChevronDown
+                    className={`w-4 h-4 text-gray-400 transition-transform duration-200 ${
+                      openSortDesktop ? 'rotate-180 text-[#2d6a4f]' : ''
+                    }`}
+                    aria-hidden="true"
+                  />
+                </button>
+
+                <AnimatePresence>
+                  {openSortDesktop && (
+                    <motion.div
+                      initial={{ opacity: 0, y: -6, scale: 0.98 }}
+                      animate={{ opacity: 1, y: 0, scale: 1 }}
+                      exit={{ opacity: 0, y: -6, scale: 0.98 }}
+                      transition={{ duration: 0.15, ease: 'easeOut' }}
+                      className="absolute right-0 mt-2 w-64 bg-white/95 backdrop-blur-md rounded-2xl shadow-xl border border-gray-100 p-1.5 z-40"
+                      role="listbox"
+                    >
+                      {SORT_OPTIONS.map((opt) => {
+                        const isSelected = sortOption === opt.value;
+                        return (
+                          <button
+                            key={opt.value}
+                            type="button"
+                            role="option"
+                            aria-selected={isSelected}
+                            onClick={() => {
+                              setSortOption(opt.value);
+                              setOpenSortDesktop(false);
+                            }}
+                            className={`w-full flex items-center justify-between px-3.5 py-2.5 rounded-xl text-xs sm:text-sm font-medium transition-colors text-left cursor-pointer ${
+                              isSelected
+                                ? 'bg-[#2d6a4f] text-white shadow-sm'
+                                : 'text-gray-700 hover:bg-[#d8f3dc]/60 hover:text-[#1b4332]'
+                            }`}
+                          >
+                            <span>{opt.label}</span>
+                            {isSelected && <Check className="w-4 h-4 text-white shrink-0 ml-2" aria-hidden="true" />}
+                          </button>
+                        );
+                      })}
+                    </motion.div>
+                  )}
+                </AnimatePresence>
+              </div>
             </div>
           </div>
 
@@ -527,6 +545,20 @@ export default function KatalogClient({ produkList }: { produkList: Produk[] }) 
                 )}
               </AnimatePresence>
             </div>
+
+            {/* Tombol Baca Artikel Kategori Mobile */}
+            <Link
+              href={aktifKategori === 'semua' ? '/artikel' : `/artikel/${aktifKategori}`}
+              className="col-span-2 flex items-center justify-center gap-1.5 py-2 px-4 rounded-full text-xs font-semibold bg-[#d8f3dc]/60 text-[#1b4332] border border-[#52b788]/30 shadow-sm"
+            >
+              <BookOpen className="w-3.5 h-3.5 text-[#2d6a4f]" aria-hidden="true" />
+              <span>
+                {aktifKategori === 'semua'
+                  ? 'Baca Artikel Florist'
+                  : `Artikel: ${KATEGORI_LABEL[aktifKategori]}`}
+              </span>
+              <ArrowRight className="w-3 h-3 text-[#2d6a4f]" aria-hidden="true" />
+            </Link>
           </div>
 
           {/* Result count */}
@@ -557,7 +589,7 @@ export default function KatalogClient({ produkList }: { produkList: Produk[] }) 
               >
                 {produkTampil.map((produk, i) => (
                   <motion.div
-                    key={produk.id}
+                    key={`${produk.slug || 'prod'}-${produk.id || i}`}
                     initial={{ opacity: 0, y: 24 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.35, delay: i * 0.05 }}

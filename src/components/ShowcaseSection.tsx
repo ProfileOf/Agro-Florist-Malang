@@ -1,7 +1,7 @@
 'use client';
 
 import { motion } from 'framer-motion';
-import { ArrowRight } from 'lucide-react';
+import { ArrowRight, BookOpen } from 'lucide-react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
@@ -221,13 +221,22 @@ export default function ShowcaseSection() {
           transition={{ duration: 0.4, delay: 0.3 }}
           className="text-center mt-12"
         >
-          <Link
-            href="/katalog"
-            className="inline-flex items-center gap-2 bg-[#14532D] hover:bg-[#0B3B2C] text-white font-semibold px-7 py-3.5 rounded-full shadow-md hover:shadow-lg transition-all hover:scale-105 text-sm"
-          >
-            Lihat Semua Produk
-            <ArrowRight className="w-4 h-4" aria-hidden="true" />
-          </Link>
+          <div className="flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-4">
+            <Link
+              href="/katalog"
+              className="w-full sm:w-auto inline-flex items-center justify-center gap-2 bg-[#14532D] hover:bg-[#0B3B2C] text-white font-semibold px-7 py-3.5 rounded-full shadow-md hover:shadow-lg transition-all hover:scale-105 text-sm"
+            >
+              Lihat Semua Produk
+              <ArrowRight className="w-4 h-4" aria-hidden="true" />
+            </Link>
+            <Link
+              href="/artikel"
+              className="w-full sm:w-auto inline-flex items-center justify-center gap-2 bg-white hover:bg-[#FAF9F5] text-[#14532D] border-2 border-[#14532D]/20 hover:border-[#14532D] font-semibold px-7 py-3.5 rounded-full shadow-sm hover:shadow-md transition-all hover:scale-105 text-sm"
+            >
+              <BookOpen className="w-4 h-4 text-[#14532D]" aria-hidden="true" />
+              Baca Artikel
+            </Link>
+          </div>
         </motion.div>
 
       </div>

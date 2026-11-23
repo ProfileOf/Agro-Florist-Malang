@@ -10,7 +10,7 @@ const navLinks = [
   { label: 'Beranda', href: '/#hero' },
   { label: 'Produk', href: '/#showcase' },
   { label: 'Cara Pesan', href: '/#cara-pesan' },
-  { label: 'Testimoni', href: '/#testimoni' },
+  { label: 'Artikel', href: '/artikel' },
   { label: 'Katalog', href: '/katalog' },
 ];
 
@@ -20,7 +20,9 @@ export default function Navbar() {
   const pathname = usePathname();
   const router = useRouter();
 
-  const isDetailPage = pathname.startsWith('/katalog/') && pathname !== '/katalog';
+  const isDetailPage =
+    (pathname.startsWith('/katalog/') && pathname !== '/katalog') ||
+    (pathname.startsWith('/artikel/') && pathname !== '/artikel');
   const isSolidNav = scrolled || isDetailPage;
 
   useEffect(() => {

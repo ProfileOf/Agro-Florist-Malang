@@ -95,6 +95,52 @@ Testimoni pelanggan berfungsi untuk meningkatkan kepercayaan calon pembeli di ha
 
 ---
 
+## 📝 Bagian 4: Panduan Menulis & Mengedit Artikel Literasi (Markdown)
+
+Untuk meningkatkan peringkat SEO di Google, website kini memiliki sistem artikel literasi untuk setiap kategori karangan bunga dan tanaman ucapan. Seluruh artikel tersimpan dalam format file **Markdown (`.md`)** di folder:
+📂 `content/artikel/`
+
+### A. Daftar File Artikel Kategori:
+1. `content/artikel/bibit-tanaman.md` (Ucapan Bibit Pohon & Buah)
+2. `content/artikel/duka-cita.md` (Duka Cita)
+3. `content/artikel/wedding.md` (Pernikahan / Wedding)
+4. `content/artikel/grand-opening.md` (Grand Opening)
+5. `content/artikel/selamat-sukses.md` (Selamat & Sukses)
+6. `content/artikel/bunga-standing.md` (Bunga Standing)
+7. `content/artikel/buket.md` (Buket Wisuda)
+8. `content/artikel/fresh-flowers.md` (Fresh Flowers)
+
+### B. Format Penulisan di File Markdown:
+Setiap file markdown memiliki bagian **Frontmatter** (diapit tanda `---`) di paling atas, diikuti oleh teks artikel di bawahnya:
+
+```markdown
+---
+title: "Judul Artikel Lengkap Disini"
+slug: "bibit-tanaman"
+kategori: "bibit-tanaman"
+kategoriLabel: "Ucapan Bibit Pohon & Buah"
+deskripsi: "Deskripsi singkat untuk Google Search (1-2 kalimat)..."
+gambar: "/images/bibitpohon.jpg"
+waktuBaca: "4 min baca"
+tanggal: "2026-11-23"
+penulis: "Tim Agro Florist Malang"
+ringkasan: "Ringkasan sorotan yang muncul di bawah judul..."
+faq:
+  - tanya: "Pertanyaan pertama?"
+    jawab: "Jawaban pertanyaan pertama..."
+  - tanya: "Pertanyaan kedua?"
+    jawab: "Jawaban pertanyaan kedua..."
+---
+
+## Judul Pembahasan (Heading 2)
+Isi teks paragraf pembahasan Anda...
+
+- Poin daftar pertama
+- Poin daftar kedua
+```
+
+---
+
 ## 💡 Tips Praktis untuk Admin
 
 1. **Ukuran & Kualitas Foto**:

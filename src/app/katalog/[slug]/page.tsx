@@ -106,7 +106,8 @@ async function getAllProduk(): Promise<Produk[]> {
 
         const sanitySlugs = new Set(sanityList.map((p) => p.slug));
         const remainingDummy = dummyKatalog.filter((p) => !sanitySlugs.has(p.slug));
-        return [...sanityList, ...remainingDummy];
+        const combined = [...sanityList, ...remainingDummy];
+        return combined.map((p, idx) => ({ ...p, id: idx + 1 }));
       }
     } catch {
       // fallback
