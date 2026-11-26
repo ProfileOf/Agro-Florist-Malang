@@ -62,10 +62,17 @@ export default function Footer() {
               Kontak
             </h3>
             <ul className="space-y-3 text-sm text-gray-300">
-              {/* <li className="flex items-start gap-2.5">
+              <li className="flex items-start gap-2.5">
                 <MapPin className="w-4 h-4 text-[#52b788] mt-0.5 shrink-0" aria-hidden="true" />
-                <span>Jl. Contoh No. 123, Kec. Lowokwaru, Kota Malang, Jawa Timur</span>
-              </li> */}
+                <a
+                  href="https://www.google.com/maps/place/7%C2%B052'40.2%22S+112%C2%B032'33.5%22E/@-7.8778348,112.5400582,17z/data=!3m1!4b1!4m4!3m3!8m2!3d-7.8778348!4d112.5426331"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="hover:text-white transition-colors"
+                >
+                  Jl. Wukir Gg. Sumber 2, Temas, Kota Batu
+                </a>
+              </li>
               <li className="flex items-center gap-2.5">
                 <Phone className="w-4 h-4 text-[#52b788] shrink-0" aria-hidden="true" />
                 <a

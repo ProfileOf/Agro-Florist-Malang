@@ -68,10 +68,17 @@ const jsonLd = {
   email: 'agrogarden73@gmail.com',
   address: {
     '@type': 'PostalAddress',
-    addressLocality: 'Malang',
+    streetAddress: 'Jl. Wukir Gg. Sumber 2, Temas',
+    addressLocality: 'Kota Batu',
     addressRegion: 'Jawa Timur',
     addressCountry: 'ID',
   },
+  geo: {
+    '@type': 'GeoCoordinates',
+    latitude: -7.8778348,
+    longitude: 112.5426331,
+  },
+  hasMap: "https://www.google.com/maps/place/7%C2%B052'40.2%22S+112%C2%B032'33.5%22E/@-7.8778348,112.5400582,17z/data=!3m1!4b1!4m4!3m3!8m2!3d-7.8778348!4d112.5426331",
 };
 
 export default function RootLayout({
